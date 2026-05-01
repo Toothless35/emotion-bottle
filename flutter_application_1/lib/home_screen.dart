@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               // 🌟 1. 我們把原本的 height: 80 刪掉了！
               // 🌟 2. 改用 padding 來把空間自然撐開，特別是底部留 25 像素避開手機的手勢橫線
-              padding: const EdgeInsets.only(top: 10, bottom: 15), 
+              padding: const EdgeInsets.only(top: 10, bottom: 10), 
               decoration: const BoxDecoration(
                 color: Color(0xFFFAF8F5),
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
