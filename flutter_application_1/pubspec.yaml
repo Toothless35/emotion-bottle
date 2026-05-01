@@ -71,18 +71,8 @@ flutter:
 
 # 從這裡開始複製下面這 5 行就好，並貼在 uses-material-design 的下面
   assets:
-    - assets/logo_cho.png
-    - assets/logo_e.png
-    - assets/logo_echo.png
-    - assets/star.png
-    - assets/penquin.png
-    - assets/quokka.png
-    - assets/rabbit.png
-    - assets/hedgedog.png
-    - assets/bottlewithmarbles.png
-    - assets/bottle.png
-    - assets/heartrate.png
-    - assets/sleeping.png
+    - assets/
+  
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

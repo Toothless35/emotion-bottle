@@ -353,7 +353,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get moodBlessed => '幸福';
 
   @override
-  String get moodRelieved => '安心';
+  String get moodRelieved => '釋懷';
 
   @override
   String get moodPeaceful => '平靜';
@@ -372,4 +372,85 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get putInBottleBtn => '放入情緒球';
+
+  @override
+  String get moodTired => '疲憊';
+
+  @override
+  String get moodBored => '無聊';
+
+  @override
+  String get moodLonely => '孤單';
+
+  @override
+  String get moodAnxious => '焦慮';
+
+  @override
+  String get moodNervous => '緊張';
+
+  @override
+  String get moodHesitant => '猶豫';
+
+  @override
+  String get moodAwkward => '尷尬';
+
+  @override
+  String get moodEnvious => '羨慕';
+
+  @override
+  String get moodGuilty => '內疚';
+
+  @override
+  String get moodRegretful => '後悔';
+
+  @override
+  String get moodAngry => '憤怒';
+
+  @override
+  String get moodJealous => '嫉妒';
+
+  @override
+  String get moodFearful => '恐懼';
+
+  @override
+  String get moodScared => '害怕';
+
+  @override
+  String get moodSad => '悲傷';
+
+  @override
+  String get moodDesperate => '絕望';
+
+  @override
+  String get moodAshamed => '羞愧';
+
+  @override
+  String get moodBreakdown => '崩潰';
+
+  @override
+  String get moodIrritable => '煩躁';
+
+  @override
+  String get moodStressed => '壓力';
+
+  @override
+  String get moodMissing => '思念';
+
+  @override
+  String get moodWeary => '疲倦';
+
+  @override
+  String get moodUnderstood => '被理解';
+
+  @override
+  String get moodIgnored => '被忽略';
+
+  @override
+  String get moodFocused => '專注';
+
+  @override
+  String get moodHealed => '療癒';
+
+  @override
+  String get moodGrowth => '成長';
 }

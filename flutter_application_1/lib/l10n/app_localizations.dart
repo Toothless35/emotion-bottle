@@ -773,7 +773,7 @@ abstract class AppLocalizations {
   /// No description provided for @moodRelieved.
   ///
   /// In zh, this message translates to:
-  /// **'安心'**
+  /// **'釋懷'**
   String get moodRelieved;
 
   /// No description provided for @moodPeaceful.
@@ -811,6 +811,168 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'放入情緒球'**
   String get putInBottleBtn;
+
+  /// No description provided for @moodTired.
+  ///
+  /// In zh, this message translates to:
+  /// **'疲憊'**
+  String get moodTired;
+
+  /// No description provided for @moodBored.
+  ///
+  /// In zh, this message translates to:
+  /// **'無聊'**
+  String get moodBored;
+
+  /// No description provided for @moodLonely.
+  ///
+  /// In zh, this message translates to:
+  /// **'孤單'**
+  String get moodLonely;
+
+  /// No description provided for @moodAnxious.
+  ///
+  /// In zh, this message translates to:
+  /// **'焦慮'**
+  String get moodAnxious;
+
+  /// No description provided for @moodNervous.
+  ///
+  /// In zh, this message translates to:
+  /// **'緊張'**
+  String get moodNervous;
+
+  /// No description provided for @moodHesitant.
+  ///
+  /// In zh, this message translates to:
+  /// **'猶豫'**
+  String get moodHesitant;
+
+  /// No description provided for @moodAwkward.
+  ///
+  /// In zh, this message translates to:
+  /// **'尷尬'**
+  String get moodAwkward;
+
+  /// No description provided for @moodEnvious.
+  ///
+  /// In zh, this message translates to:
+  /// **'羨慕'**
+  String get moodEnvious;
+
+  /// No description provided for @moodGuilty.
+  ///
+  /// In zh, this message translates to:
+  /// **'內疚'**
+  String get moodGuilty;
+
+  /// No description provided for @moodRegretful.
+  ///
+  /// In zh, this message translates to:
+  /// **'後悔'**
+  String get moodRegretful;
+
+  /// No description provided for @moodAngry.
+  ///
+  /// In zh, this message translates to:
+  /// **'憤怒'**
+  String get moodAngry;
+
+  /// No description provided for @moodJealous.
+  ///
+  /// In zh, this message translates to:
+  /// **'嫉妒'**
+  String get moodJealous;
+
+  /// No description provided for @moodFearful.
+  ///
+  /// In zh, this message translates to:
+  /// **'恐懼'**
+  String get moodFearful;
+
+  /// No description provided for @moodScared.
+  ///
+  /// In zh, this message translates to:
+  /// **'害怕'**
+  String get moodScared;
+
+  /// No description provided for @moodSad.
+  ///
+  /// In zh, this message translates to:
+  /// **'悲傷'**
+  String get moodSad;
+
+  /// No description provided for @moodDesperate.
+  ///
+  /// In zh, this message translates to:
+  /// **'絕望'**
+  String get moodDesperate;
+
+  /// No description provided for @moodAshamed.
+  ///
+  /// In zh, this message translates to:
+  /// **'羞愧'**
+  String get moodAshamed;
+
+  /// No description provided for @moodBreakdown.
+  ///
+  /// In zh, this message translates to:
+  /// **'崩潰'**
+  String get moodBreakdown;
+
+  /// No description provided for @moodIrritable.
+  ///
+  /// In zh, this message translates to:
+  /// **'煩躁'**
+  String get moodIrritable;
+
+  /// No description provided for @moodStressed.
+  ///
+  /// In zh, this message translates to:
+  /// **'壓力'**
+  String get moodStressed;
+
+  /// No description provided for @moodMissing.
+  ///
+  /// In zh, this message translates to:
+  /// **'思念'**
+  String get moodMissing;
+
+  /// No description provided for @moodWeary.
+  ///
+  /// In zh, this message translates to:
+  /// **'疲倦'**
+  String get moodWeary;
+
+  /// No description provided for @moodUnderstood.
+  ///
+  /// In zh, this message translates to:
+  /// **'被理解'**
+  String get moodUnderstood;
+
+  /// No description provided for @moodIgnored.
+  ///
+  /// In zh, this message translates to:
+  /// **'被忽略'**
+  String get moodIgnored;
+
+  /// No description provided for @moodFocused.
+  ///
+  /// In zh, this message translates to:
+  /// **'專注'**
+  String get moodFocused;
+
+  /// No description provided for @moodHealed.
+  ///
+  /// In zh, this message translates to:
+  /// **'療癒'**
+  String get moodHealed;
+
+  /// No description provided for @moodGrowth.
+  ///
+  /// In zh, this message translates to:
+  /// **'成長'**
+  String get moodGrowth;
 }
 
 class _AppLocalizationsDelegate

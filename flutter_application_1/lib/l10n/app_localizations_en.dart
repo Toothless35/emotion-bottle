@@ -397,4 +397,85 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get putInBottleBtn => 'Put into Bottle';
+
+  @override
+  String get moodTired => 'Tired';
+
+  @override
+  String get moodBored => 'Bored';
+
+  @override
+  String get moodLonely => 'Lonely';
+
+  @override
+  String get moodAnxious => 'Anxious';
+
+  @override
+  String get moodNervous => 'Nervous';
+
+  @override
+  String get moodHesitant => 'Hesitant';
+
+  @override
+  String get moodAwkward => 'Awkward';
+
+  @override
+  String get moodEnvious => 'Envious';
+
+  @override
+  String get moodGuilty => 'Guilty';
+
+  @override
+  String get moodRegretful => 'Regretful';
+
+  @override
+  String get moodAngry => 'Angry';
+
+  @override
+  String get moodJealous => 'Jealous';
+
+  @override
+  String get moodFearful => 'Fearful';
+
+  @override
+  String get moodScared => 'Scared';
+
+  @override
+  String get moodSad => 'Sad';
+
+  @override
+  String get moodDesperate => 'Desperate';
+
+  @override
+  String get moodAshamed => 'Ashamed';
+
+  @override
+  String get moodBreakdown => 'Breakdown';
+
+  @override
+  String get moodIrritable => 'Irritable';
+
+  @override
+  String get moodStressed => 'Stressed';
+
+  @override
+  String get moodMissing => 'Missing';
+
+  @override
+  String get moodWeary => 'Weary';
+
+  @override
+  String get moodUnderstood => 'Understood';
+
+  @override
+  String get moodIgnored => 'Ignored';
+
+  @override
+  String get moodFocused => 'Focused';
+
+  @override
+  String get moodHealed => 'Healed';
+
+  @override
+  String get moodGrowth => 'Growth';
 }
