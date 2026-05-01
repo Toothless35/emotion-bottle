@@ -17,12 +17,12 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
     // 🌟 召喚字典
     final loc = AppLocalizations.of(context)!;
 
-    // 🌟 1. 將類別清單移到這裡，並換成字典變數
-    final List<String> categories = [
-      loc.categoryWarm,
-      loc.categoryCalm,
-      loc.categoryStorm,
-      loc.categoryMixed,
+    // 🌟 1. 將類別清單升級為包含圖片路徑的 Map
+    final List<Map<String, String>> categories = [
+      {'name': loc.categoryWarm, 'image': 'assets/warmtime.png'},   // 請替換成你實際的圖片檔名
+      {'name': loc.categoryCalm, 'image': 'assets/silentfeel.png'},
+      {'name': loc.categoryStorm, 'image': 'assets/emotionstrom.png'},
+      {'name': loc.categoryMixed, 'image': 'assets/weavemood.png'},
     ];
 
     // 🌟 1. 改寫 warmMoods (把 colors 換成 image)
@@ -31,7 +31,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
       {'name': loc.moodJoy, 'image': 'assets/joy.png'},             // 喜悅
       {'name': loc.moodExpectant, 'image': 'assets/expect.png'},    // 期待
       {'name': loc.moodBlessed, 'image': 'assets/happiness.png'},     // 幸福
-      {'name': loc.moodAtEase, 'image': 'assets/ease.png'},         // 安心
+      {'name': loc.moodRelieved, 'image': 'assets/ease.png'},         // 安心
       {'name': loc.moodPeaceful, 'image': 'assets/calm.png'},           // 平靜
       {'name': loc.moodHope, 'image': 'assets/hope.png'},           // 希望
       {'name': loc.moodLove, 'image': 'assets/love.png'},           // 愛
@@ -113,14 +113,15 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                     onPressed: () => Navigator.pop(context),
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 40),
                 // 🌟 使用字典的提示文字 (我們直接沿用首頁的 homePromptText)
                 Text(
                   loc.homePromptText,
                   style: const TextStyle(fontSize: 18, color: Color(0xFF5D4037), fontWeight: FontWeight.w500),
                 ),
+                const SizedBox(height: 30),
                 SizedBox(
-                  height: 200,
+                  height: 280,
                   child: Image.asset('assets/bottle.png', fit: BoxFit.contain), 
                 ),
               ],
@@ -130,7 +131,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.55,
+              height: MediaQuery.of(context).size.height * 0.48,// 🌟 降到底部佔比 48%
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Color(0xFFFFF6D9),
@@ -139,7 +140,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
               ),
               child: Column(
                 children: [
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 70),
                   Expanded(
                     child: SingleChildScrollView(
                       child: Padding(
@@ -185,7 +186,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
           ),
 
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.45 - 40,
+            top: MediaQuery.of(context).size.height * 0.52 - 40,// 🌟 配合下方高度改變，把基準線往下降，因為 1 - 0.48 = 0.52
             left: 0,
             right: 0,
             child: Row(
@@ -243,9 +244,9 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
               name,
               style: const TextStyle(
                 fontSize: 14,
-                color: Color(0xFF5D4037),
+                color: Color.fromARGB(255, 210, 121, 96),
                 fontWeight: FontWeight.bold,
-                shadows: [Shadow(color: Colors.white70, blurRadius: 2)],
+                shadows: [Shadow(color: Color.fromARGB(255, 255, 255, 255), blurRadius: 1)],
               ),
             ),
           ],
@@ -253,31 +254,37 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
       ),
     );
   }
-  // 🌟 把它貼在檔案的最下面，補回你遺失的分類按鈕函數！
-  Widget _buildCategoryIcon(int index, String categoryName) {
+  // 🌟 更新接收的參數型別為 Map<String, String>
+  Widget _buildCategoryIcon(int index, Map<String, String> categoryData) {
     final bool isSelected = _selectedCategoryIndex == index;
+    final String categoryName = categoryData['name']!;
+    final String imagePath = categoryData['image']!; // 抓出圖片路徑
+
     return GestureDetector(
-      // 👇 就是這行程式碼讓上面的藍線消失的！它負責切換頁面
       onTap: () => setState(() => _selectedCategoryIndex = index),
       child: Column(
         children: [
-          Container(
-            width: 50,
-            height: 50,
+          // 1. 分類圖示 (使用 Figma 圖片)
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            width: isSelected ? 55 : 45,   // 選中時稍微放大
+            height: isSelected ? 55 : 45,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: isSelected ? Colors.white : Colors.white60,
-              border: isSelected ? Border.all(color: Colors.white, width: 2) : null,
-              boxShadow: isSelected ? [const BoxShadow(color: Colors.black12, blurRadius: 5)] : [],
+              // 如果被選中，可以加個發光陰影讓它更明顯
+              boxShadow: isSelected ? [const BoxShadow(color: Colors.white70, blurRadius: 10)] : [],
             ),
-            // 💡 小提醒：如果你在 Figma 也有匯出上面那四顆代表分類的大圖示
-            // 之後可以把這個 Container 換成 Image.asset 喔！
+            child: ClipOval(
+              child: Image.asset(imagePath, fit: BoxFit.cover),
+            ),
           ),
           const SizedBox(height: 5),
+          // 2. 分類文字
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
-              color: isSelected ? Colors.white : Colors.transparent,
+              // 選中時文字底下可以墊個白色背景，或是維持透明
+              color: isSelected ? const Color.fromARGB(255, 255, 203, 203) : Colors.transparent,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Text(

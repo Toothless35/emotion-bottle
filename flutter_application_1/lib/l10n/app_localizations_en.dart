@@ -444,13 +444,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moodSad => 'Sad';
 
   @override
-  String get moodDesperate => 'Desperate';
+  String get moodDesperate => 'Despair';
 
   @override
   String get moodAshamed => 'Ashamed';
 
   @override
-  String get moodBreakdown => 'Breakdown';
+  String get moodBreakdown => 'Crumble';
 
   @override
   String get moodIrritable => 'Irritable';
@@ -465,7 +465,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moodWeary => 'Weary';
 
   @override
-  String get moodUnderstood => 'Understood';
+  String get moodUnderstood => 'Got it';
 
   @override
   String get moodIgnored => 'Ignored';
