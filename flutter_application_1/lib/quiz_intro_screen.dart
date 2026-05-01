@@ -38,9 +38,11 @@ class QuizIntroScreen extends StatelessWidget {
           ),
 
           // ================= 【主要內容區塊】 =================
+          // 🌟 關鍵在這裡！在 SafeArea 和 Column 之間，加入 SingleChildScrollView
           SafeArea(
             child: SizedBox(
               width: double.infinity,
+              child: SingleChildScrollView( // <--- 加入這個！！！
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center, // 整體置中對齊
                 children: [
@@ -128,6 +130,7 @@ class QuizIntroScreen extends StatelessWidget {
                 ],
               ),
             ),
+          ),
           ),
         ],
       ),
