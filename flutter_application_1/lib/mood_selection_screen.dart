@@ -43,7 +43,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
     final List<Map<String, dynamic>> calmMoods = [
       {'name': loc.moodTired, 'image': 'assets/tired.png'}, 
       {'name': loc.moodBored, 'image': 'assets/boring.png'},
-      {'name': loc.moodLonely, 'image': 'assets/lonely.png'},
+      {'name': loc.moodLonely, 'image': 'assets/lonly.png'},
       {'name': loc.moodAnxious, 'image': 'assets/anxious.png'},
       {'name': loc.moodNervous, 'image': 'assets/nervous.png'},
       {'name': loc.moodHesitant, 'image': 'assets/hesitate.png'},
@@ -75,7 +75,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
       {'name': loc.moodIgnored, 'image': 'assets/neglect.png'},
       {'name': loc.moodFocused, 'image': 'assets/focus.png'},
       {'name': loc.moodHealed, 'image': 'assets/cure.png'},
-      {'name': loc.moodRelieved, 'image': 'assets/reliease.png'},
+      {'name': loc.moodRelieved, 'image': 'assets/release.png'},
       {'name': loc.moodGrowth, 'image': 'assets/grow.png'},
     ];
 
