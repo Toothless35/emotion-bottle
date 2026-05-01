@@ -65,7 +65,7 @@ class QuizIntroScreen extends StatelessWidget {
                     style: const TextStyle(fontSize: 16, color: Color(0xFF5D4037), height: 1.5),
                   ),
                   
-                  const Spacer(flex: 1), // 👈 上方空間佔 2 份，星星會被往下推
+                  const SizedBox(height: 40), // 👈 上方空間佔 2 份，星星會被往下推
 
                   // --- 替換原本的 Image.asset 部分 ---
                   TweenAnimationBuilder<double>(
