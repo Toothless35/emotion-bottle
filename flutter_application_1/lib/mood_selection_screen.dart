@@ -10,6 +10,8 @@ class MoodSelectionScreen extends StatefulWidget {
 
 class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
   int _selectedCategoryIndex = 0;
+  // 🌟 把這行加在這裡！這是控制瓶子有沒有裝滿的開關
+  bool _isBottleFilled = false;
   final Set<String> _selectedMoods = {};
 
   @override
@@ -87,6 +89,32 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
       mixedMoods,  // index 3
     ];
 
+    // 🌟 把它們貼在 return Scaffold( 的正上方！
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    // 1. 決定現在要顯示的文字
+    String currentPromptText = loc.homePromptText;
+    if (_isBottleFilled) {
+      switch (_selectedCategoryIndex) {
+        case 0: currentPromptText = "叮！溫暖的光，點亮了瓶子"; break;
+        case 1: currentPromptText = "咚！平靜的片刻，同樣重要"; break;
+        case 2: currentPromptText = "碰！這份強烈，被安全接住了"; break;
+        case 3: currentPromptText = "噹！不說清楚，也可以被理解"; break;
+      }
+    }
+
+    // 2. 決定現在要顯示的瓶子圖片
+    String currentBottleImage = 'assets/bottle.png'; // 預設空瓶
+    if (_isBottleFilled) {
+      switch (_selectedCategoryIndex) {
+        case 0: currentBottleImage = 'assets/bottle_warm.png'; break;
+        case 1: currentBottleImage = 'assets/bottle_calm.png'; break;
+        case 2: currentBottleImage = 'assets/bottle_storm.png'; break;
+        case 3: currentBottleImage = 'assets/bottle_mixed.png'; break;
+      }
+    }
+    // 🌟 貼到這裡結束！
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFF9EE),
       body: Stack(
@@ -103,28 +131,48 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
             ),
           ),
           
-          SafeArea(
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_circle_left_outlined, size: 32, color: Color(0xFF5D4037)),
-                    onPressed: () => Navigator.pop(context),
+          // 2. 頂部內容 (綁定在畫面上半部，絕不與底板重疊)
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+            top: 0,
+            left: 0,
+            right: 0,
+            // 🌟 關鍵：空瓶時只佔據螢幕上半部 (52%)，滿瓶時自動佔據全螢幕
+            bottom: _isBottleFilled ? 0 : screenHeight * 0.48, 
+            child: SafeArea(
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                      icon: const Icon(Icons.arrow_circle_left_outlined, size: 32, color: Color(0xFF5D4037)),
+                      onPressed: () => Navigator.pop(context),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 40),
-                // 🌟 使用字典的提示文字 (我們直接沿用首頁的 homePromptText)
-                Text(
-                  loc.homePromptText,
-                  style: const TextStyle(fontSize: 18, color: Color(0xFF5D4037), fontWeight: FontWeight.w500),
-                ),
-                const SizedBox(height: 30),
-                SizedBox(
-                  height: 280,
-                  child: Image.asset('assets/bottle.png', fit: BoxFit.contain), 
-                ),
-              ],
+                  const SizedBox(height: 10),
+                  // 漸變文字
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    child: Text(
+                      currentPromptText,
+                      key: ValueKey<String>(currentPromptText),
+                      style: const TextStyle(fontSize: 18, color: Color(0xFF5D4037), fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  // 🌟 用 Expanded 讓瓶子「自動撐滿」剩下的所有安全空間！
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 40), // 底部留一點白，不跟分類球打架
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 300),
+                        child: Image.asset(currentBottleImage, key: ValueKey<String>(currentBottleImage), fit: BoxFit.contain),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
 
@@ -186,13 +234,20 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
           ),
 
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.52 - 40,// 🌟 配合下方高度改變，把基準線往下降，因為 1 - 0.48 = 0.52
+            top: MediaQuery.of(context).size.height * 0.52 - 40, // 維持你原本的高度設定
             left: 0,
             right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              // 🌟 將傳入 _buildCategoryIcon 的資料換成 categories
-              children: List.generate(categories.length, (index) => _buildCategoryIcon(index, categories[index])),
+            // 👇 就是這裡！加入水平滑動魔法
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal, // 讓它可以左右滑動
+              padding: const EdgeInsets.symmetric(horizontal: 10), // 螢幕兩側留一點點空白
+              child: Row(
+                // ⚠️ 注意：加入滑動後，就不需要原本的 mainAxisAlignment 了
+                children: List.generate(categories.length, (index) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15), // 幫每個按鈕左右加上間距，才不會擠在一起
+                  child: _buildCategoryIcon(index, categories[index]),
+                )),
+              ),
             ),
           ),
         ],
@@ -244,9 +299,9 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
               name,
               style: const TextStyle(
                 fontSize: 14,
-                color: Color.fromARGB(255, 210, 121, 96),
+                color: Color.fromARGB(255, 244, 243, 243),
                 fontWeight: FontWeight.bold,
-                shadows: [Shadow(color: Color.fromARGB(255, 255, 255, 255), blurRadius: 1)],
+                shadows: [Shadow(color: Color.fromARGB(255, 31, 15, 15), blurRadius: 1)],
               ),
             ),
           ],
