@@ -242,7 +242,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
           // 4. 分類按鈕列
           Positioned(
             // 🌟 關鍵在這裡！把原本的 - 25 改成 - 50，讓球體往下壓
-            top: MediaQuery.of(context).size.height * 0.45 - 90,
+            top: MediaQuery.of(context).size.height * 0.45 - 10,
             left: 0,
             right: 0,
             // 🌟 1. 加入水平滑動魔法，這樣超出螢幕就可以滑動了！
