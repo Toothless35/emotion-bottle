@@ -174,11 +174,17 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                   // 👇 2. 把瓶子往上移：找到這個 Expanded 裡的 padding
                   Expanded(
                     child: Padding(
-                      // 🌟 關鍵在這裡！把 bottom 從 40 加大到 100（甚至 120），底部空間變大，瓶子就會往上升！
-                      padding: const EdgeInsets.only(bottom: 180), // 底部留一點白，不跟分類球打架
-                      child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 300),
-                        child: Image.asset(currentBottleImage, key: ValueKey<String>(currentBottleImage), fit: BoxFit.contain),
+                      // 1. 把過大的 bottom 邊距改回正常的安全距離 (例如 20)
+                      padding: const EdgeInsets.only(bottom: 20), 
+                      child: Align(
+                        // 🌟 2. 關鍵魔法：利用 Alignment 控制垂直位置！
+                        // y 軸的範圍是 -1.0 (最頂部) 到 1.0 (最底部)，0.0 是正中間。
+                        // 使用負數 (-0.2 ~ -0.6) 就可以把瓶子完美地往上提！
+                        alignment: const Alignment(0.0, -0.4), 
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          child: Image.asset(currentBottleImage, key: ValueKey<String>(currentBottleImage), fit: BoxFit.contain),
+                        ),
                       ),
                     ),
                   ),
