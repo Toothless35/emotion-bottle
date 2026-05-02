@@ -1,3 +1,4 @@
+import 'bottle_inside_screen.dart';
 import 'mood_selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'l10n/app_localizations.dart';
@@ -248,10 +249,25 @@ class _HomeContentState extends State<HomeContent> {
                   style: const TextStyle(fontSize: 18, color: Color(0xFF5D4037), fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(height: 20),
-                SizedBox(
-                  height: 250,
-                  child: Image.asset('assets/bottlewithmarbles.png', fit: BoxFit.contain), 
-                ),
+                // 🌟 把原本裝瓶子的 SizedBox，用 GestureDetector 包起來！
+                GestureDetector(
+                  onTap: () {
+                    // 跳轉到剛剛寫好的瓶內世界！
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) => const BottleInsideScreen(),
+                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                          return FadeTransition(opacity: animation, child: child);
+                        },
+                      ),
+                    );
+                  },
+                  child: SizedBox(
+                    height: 250,
+                    child: Image.asset('assets/bottlewithmarbles.png', fit: BoxFit.contain),
+                  ),
+                ), // 結束這個新增的 GestureDetector
                 const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {

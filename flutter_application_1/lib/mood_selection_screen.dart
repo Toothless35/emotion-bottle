@@ -1,3 +1,4 @@
+import 'bottle_inside_screen.dart';
 import 'package:flutter/material.dart';
 import 'l10n/app_localizations.dart';
 
@@ -259,8 +260,30 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                 onTap: () {
                   setState(() {
                     _isBottleFilled = !_isBottleFilled; // 切換滿瓶 / 空瓶狀態
-                  });
-                },
+                  // 🌟 2. 真實紀錄魔法！當瓶子裝滿時，計算分數
+            if (_isBottleFilled) {
+              // 準備一個對照表，對應你目前的四個類別 (請根據你的類別順序調整)
+              List<String> categoryNames = [
+                'Warm Moments', 
+                'Quiet Feelings', 
+                'Emotional Storm', 
+                'Mixed Moods'
+              ];
+              
+              // 取得現在正在哪個類別
+              String currentCategory = categoryNames[_selectedCategoryIndex];
+              
+              // 計算你剛剛點亮了幾顆球 (這就是你要放入的數量！)
+              int selectedCount = _selectedMoods.length; 
+              
+              // 把數量加進我們的小黑板資料庫裡！
+              globalWeeklyData[currentCategory] = (globalWeeklyData[currentCategory] ?? 0) + selectedCount;
+              
+              // (可選) 放入瓶子後，把選取的球清空，為下次做準備
+              _selectedMoods.clear(); 
+            }
+          });
+        },
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                   decoration: BoxDecoration(
