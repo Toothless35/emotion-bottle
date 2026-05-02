@@ -107,29 +107,32 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
     String currentBottleImage = 'assets/bottle.png'; // 預設空瓶
     if (_isBottleFilled) {
       switch (_selectedCategoryIndex) {
-        case 0: currentBottleImage = 'assets/bottle_warm.png'; break;
-        case 1: currentBottleImage = 'assets/bottle_calm.png'; break;
-        case 2: currentBottleImage = 'assets/bottle_storm.png'; break;
-        case 3: currentBottleImage = 'assets/bottle_mixed.png'; break;
+        case 0: currentBottleImage = 'assets/sltwarm.png'; break;
+        case 1: currentBottleImage = 'assets/sltsilent.png'; break;
+        case 2: currentBottleImage = 'assets/sltstorm.png'; break;
+        case 3: currentBottleImage = 'assets/sltweave.png'; break;
       }
     }
     // 🌟 貼到這裡結束！
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFF9EE),
-      body: Stack(
-        children: [
-          // 背景漸層
-          Container(
-            height: 300,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Color(0x66F79A8B), Color(0x66FFD194)],
+      body: Center( // 🌟 讓 App 在大螢幕時置中顯示
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 450), // 🌟 限制最大寬度為 450 (常見手機寬度)
+          child: Stack(
+            children: [
+              // 背景漸層
+              Container(
+                height: screenHeight * 0.6, // 🌟 讓粉紅漸層自動佔據 60% 的螢幕，完美接軌下方的黃底板！
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Color(0x66F79A8B), Color(0x66FFD194)],
+                  ),
+                ),
               ),
-            ),
-          ),
           
           // 2. 頂部內容 (綁定在畫面上半部，絕不與底板重疊)
           AnimatedPositioned(
@@ -236,8 +239,10 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
             ),
           ),
 
+          // 4. 分類按鈕列
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.45 - 40,
+            // 🌟 關鍵在這裡！把原本的 - 25 改成 - 50，讓球體往下壓
+            top: MediaQuery.of(context).size.height * 0.45 - 50,
             left: 0,
             right: 0,
             // 🌟 1. 加入水平滑動魔法，這樣超出螢幕就可以滑動了！
@@ -250,7 +255,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                   return Padding(
                     // 🌟 2. 幫每一顆球單獨加上左右邊距來控制距離！
                     // 把數字調小（例如 10 甚至 8），它們就會靠得更近
-                    padding: const EdgeInsets.symmetric(horizontal: 10), 
+                    padding: const EdgeInsets.symmetric(horizontal: 5), 
                     child: _buildCategoryIcon(index, categories[index]),
                   );
                 }),
@@ -258,8 +263,10 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
             ),
           ),
         ],
-      ),
-    );
+        ), // 結束 Stack
+      ), // 🌟 結束 ConstrainedBox (剛剛漏關的門)
+    ), // 🌟 結束 Center (剛剛漏關的門)
+  ); // 結束 Scaffold
   }
 
   Widget _buildMoodSphere(Map<String, dynamic> mood) {
