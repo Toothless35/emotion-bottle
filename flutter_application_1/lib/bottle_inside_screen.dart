@@ -1,12 +1,17 @@
+import 'category_detail_screen.dart';
 import 'package:flutter/material.dart';
 
-// 🌟 1. 建立一個全域的「共用資料庫」，預設大家的球數都是 0
-Map<String, int> globalWeeklyData = {
-  'Warm Moments': 0,
-  'Quiet Feelings': 0,
-  'Emotional Storm': 0,
-  'Mixed Moods': 0,
-};
+/// 🌟 1. 定義「情緒紀錄」的專屬格式
+class MoodRecord {
+  final String category; // 屬於哪個類別 (例如：Warm Moments)
+  final String moodName; // 具體是哪顆球 (例如：Happy, Peaceful)
+  final DateTime time;   // 放入的時間
+
+  MoodRecord({required this.category, required this.moodName, required this.time});
+}
+
+// 🌟 2. 升級版小黑板：現在它是一個可以裝無限多筆紀錄的清單！
+List<MoodRecord> globalMoodHistory = [];
 
 class BottleInsideScreen extends StatelessWidget {
     const BottleInsideScreen({super.key});
@@ -24,40 +29,44 @@ class BottleInsideScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 1. 邏輯運算：找出數量最多的類別
-    String maxCategory = globalWeeklyData.keys.first;
+    // 🌟 1. 從日記本自動結算每個類別有幾顆球
+    Map<String, int> weeklyCounts = {'Warm Moments': 0, 'Quiet Feelings': 0, 'Emotional Storm': 0, 'Mixed Moods': 0};
+    for (var record in globalMoodHistory) {
+      weeklyCounts[record.category] = (weeklyCounts[record.category] ?? 0) + 1;
+    }
+
+    // 🌟 2. 找出數量最多的類別
+    String maxCategory = weeklyCounts.keys.first;
     int maxCount = 0;
-    globalWeeklyData.forEach((key, value) {
-      if (value > maxCount) {
-        maxCount = value;
-        maxCategory = key;
+    weeklyCounts.forEach((key, value) {
+      if (value > maxCount) { 
+        maxCount = value; 
+        maxCategory = key; 
       }
     });
 
-    // 2. 準備裝所有球的清單
-    List<Widget> spheres = [];
-    
-    // 預先設定幾個在畫面中的位置 (使用 Align 的 Alignment，0.0 是正中間)
-    // 這樣球就不會全部疊在一起
+    // 🌟 3. 就是這裡！被我害你刪掉的座標清單復活了！
     final List<Alignment> positions = [
-      const Alignment(-0.8, 0.1),   // 0. 中間偏下 (留給最大顆的球)
-      const Alignment(0.1, 0.1), // 1. 左上
-      const Alignment(0.7, 0.2),   // 2. 右下
-      const Alignment(-0.4, 0.4),  // 3. 左下
-      const Alignment(0.2, 0.35),  // 4. 右上
+      const Alignment(0.0, 0.1),   // 0. 中間偏下 (留給最大顆的球)
+      const Alignment(-0.5, -0.3), // 1. 左上
+      const Alignment(0.6, 0.4),   // 2. 右下
+      const Alignment(-0.6, 0.5),  // 3. 左下
+      const Alignment(0.4, -0.2),  // 4. 右上
     ];
+    
     int posIndex = 0;
+    List<Widget> spheres = [];
 
-    // 3. 根據邏輯把球放進畫面上
-    globalWeeklyData.forEach((category, count) {
+    // 🌟 4. 根據數量把球分配到畫面上的座標
+    weeklyCounts.forEach((category, count) {
       if (count > 0) {
         if (category == maxCategory) {
-          // 🏆 如果是第一名的類別：放一顆巨大球 (150) + 一顆普通球 (80)
-          spheres.add(_buildSphere(_getSphereImage(category), 150, positions[posIndex++ % positions.length]));
-          spheres.add(_buildSphere(_getSphereImage(category), 80, positions[posIndex++ % positions.length]));
+          // 🏆 第一名：一大一小 
+          spheres.add(_buildSphere(category, _getSphereImage(category), 150, positions[posIndex++ % positions.length], context));
+          spheres.add(_buildSphere(category, _getSphereImage(category), 80, positions[posIndex++ % positions.length], context));
         } else {
-          // 🎈 其他類別：放一顆普通球 (80)
-          spheres.add(_buildSphere(_getSphereImage(category), 80, positions[posIndex++ % positions.length]));
+          // 🎈 其他：一顆小球
+          spheres.add(_buildSphere(category, _getSphereImage(category), 80, positions[posIndex++ % positions.length], context));
         }
       }
     });
@@ -91,16 +100,23 @@ class BottleInsideScreen extends StatelessWidget {
     );
   }
 
-  // 畫出一顆球的共用元件
-  Widget _buildSphere(String imagePath, double size, Alignment alignment) {
+  // 畫出一顆球的共用元件 (多加了 category 和 context 參數來做跳轉)
+  Widget _buildSphere(String category, String imagePath, double size, Alignment alignment, BuildContext context) {
     return Align(
       alignment: alignment,
-      child: SizedBox(
-        width: size,
-        height: size,
-        // ⚠️ 這裡先用 Container 暫代，等你確定圖片路徑後，改成下面那行 Image.asset
-        // 👇 這裡才是魔法的關鍵！它會自動吃上面傳進來的 imagePath 變數！
-        child: Image.asset(imagePath, fit: BoxFit.contain), 
+      child: GestureDetector(
+        onTap: () {
+          // 🌟 點擊球體，帶著類別名稱跳轉到明細頁面！
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CategoryDetailScreen(categoryName: category)),
+          );
+        },
+        child: SizedBox(
+          width: size,
+          height: size,
+          child: Image.asset(imagePath, fit: BoxFit.contain), 
+        ),
       ),
     );
   }

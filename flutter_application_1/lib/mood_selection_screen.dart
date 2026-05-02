@@ -32,54 +32,54 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
     final List<Map<String, dynamic>> warmMoods = [
       {'name': loc.moodHappy, 'image': 'assets/happy.png'},         // 快樂
       {'name': loc.moodJoy, 'image': 'assets/joy.png'},             // 喜悅
-      {'name': loc.moodExpectant, 'image': 'assets/expect.png'},    // 期待
-      {'name': loc.moodBlessed, 'image': 'assets/happiness.png'},     // 幸福
-      {'name': loc.moodRelieved, 'image': 'assets/ease.png'},         // 安心
-      {'name': loc.moodPeaceful, 'image': 'assets/calm.png'},           // 平靜
+      {'name': loc.moodExpectant, 'image': 'assets/expectant.png'},    // 期待
+      {'name': loc.moodBlessed, 'image': 'assets/blessed.png'},     // 幸福
+      {'name': loc.moodRelieved, 'image': 'assets/at_ease.png'},         // 安心
+      {'name': loc.moodPeaceful, 'image': 'assets/peaceful.png'},           // 平靜
       {'name': loc.moodHope, 'image': 'assets/hope.png'},           // 希望
       {'name': loc.moodLove, 'image': 'assets/love.png'},           // 愛
-      {'name': loc.moodTender, 'image': 'assets/gentle.png'},       // 溫柔
+      {'name': loc.moodTender, 'image': 'assets/tender.png'},       // 溫柔
       {'name': loc.moodAtEase, 'image': 'assets/free.png'},
     ];
 
     // 🌟 2. 新增第二頁的陣列 (靜靜感受)
     final List<Map<String, dynamic>> calmMoods = [
       {'name': loc.moodTired, 'image': 'assets/tired.png'}, 
-      {'name': loc.moodBored, 'image': 'assets/boring.png'},
-      {'name': loc.moodLonely, 'image': 'assets/lonly.png'},
+      {'name': loc.moodBored, 'image': 'assets/bored.png'},
+      {'name': loc.moodLonely, 'image': 'assets/lonely.png'},
       {'name': loc.moodAnxious, 'image': 'assets/anxious.png'},
-      {'name': loc.moodNervous, 'image': 'assets/neverous.png'},
-      {'name': loc.moodHesitant, 'image': 'assets/hesitate.png'},
-      {'name': loc.moodAwkward, 'image': 'assets/embrassing.png'}, // 如果沒有尷尬的圖，請換成你實際存的檔名
-      {'name': loc.moodEnvious, 'image': 'assets/envy.png'},
-      {'name': loc.moodGuilty, 'image': 'assets/guiltyconsience.png'},
-      {'name': loc.moodRegretful, 'image': 'assets/regret.png'},
+      {'name': loc.moodNervous, 'image': 'assets/nervous.png'},
+      {'name': loc.moodHesitant, 'image': 'assets/hesitant.png'},
+      {'name': loc.moodAwkward, 'image': 'assets/awkward.png'}, // 如果沒有尷尬的圖，請換成你實際存的檔名
+      {'name': loc.moodEnvious, 'image': 'assets/envious.png'},
+      {'name': loc.moodGuilty, 'image': 'assets/guilty.png'},
+      {'name': loc.moodRegretful, 'image': 'assets/regretful.png'},
     ];
     
     // 🌟 3. 新增第三頁的陣列 (情緒風暴)
     final List<Map<String, dynamic>> stormMoods = [
       {'name': loc.moodAngry, 'image': 'assets/angry.png'},
       {'name': loc.moodJealous, 'image': 'assets/jealous.png'},
-      {'name': loc.moodFearful, 'image': 'assets/afraid.png'},
-      {'name': loc.moodScared, 'image': 'assets/dread.png'},
+      {'name': loc.moodFearful, 'image': 'assets/fearful.png'},
+      {'name': loc.moodScared, 'image': 'assets/scared.png'},
       {'name': loc.moodSad, 'image': 'assets/sad.png'},
-      {'name': loc.moodDesperate, 'image': 'assets/desperation.png'},
+      {'name': loc.moodDesperate, 'image': 'assets/despair.png'},
       {'name': loc.moodAshamed, 'image': 'assets/ashamed.png'},
       {'name': loc.moodBreakdown, 'image': 'assets/crumble.png'},
-      {'name': loc.moodIrritable, 'image': 'assets/upset.png'},
-      {'name': loc.moodStressed, 'image': 'assets/stress.png'},
+      {'name': loc.moodIrritable, 'image': 'assets/irritable.png'},
+      {'name': loc.moodStressed, 'image': 'assets/stressed.png'},
     ];
 
     // 🌟 4. 新增第四頁的陣列 (交織心情)
     final List<Map<String, dynamic>> mixedMoods = [
-      {'name': loc.moodMissing, 'image': 'assets/miss.png'},
-      {'name': loc.moodWeary, 'image': 'assets/easebuttired.png'},
-      {'name': loc.moodUnderstood, 'image': 'assets/understood.png'},
-      {'name': loc.moodIgnored, 'image': 'assets/neglect.png'},
-      {'name': loc.moodFocused, 'image': 'assets/focus.png'},
-      {'name': loc.moodHealed, 'image': 'assets/cure.png'},
-      {'name': loc.moodRelieved, 'image': 'assets/release.png'},
-      {'name': loc.moodGrowth, 'image': 'assets/grow.png'},
+      {'name': loc.moodMissing, 'image': 'assets/missing.png'},
+      {'name': loc.moodWeary, 'image': 'assets/weary.png'},
+      {'name': loc.moodUnderstood, 'image': 'assets/got_it.png'},
+      {'name': loc.moodIgnored, 'image': 'assets/ignored.png'},
+      {'name': loc.moodFocused, 'image': 'assets/focused.png'},
+      {'name': loc.moodHealed, 'image': 'assets/healed.png'},
+      {'name': loc.moodRelieved, 'image': 'assets/relieved.png'},
+      {'name': loc.moodGrowth, 'image': 'assets/growth.png'},
     ];
 
     // 🌟 5. 最後！把這四個房間裝進一個大陣列 (超級關鍵)
@@ -256,7 +256,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
             ),
           ),
           
-          // 🌟 5. 底部獨立操作按鈕 (貼在 4. 分類按鈕列 的下面， Stack 結束的 ], 前面！)
+          // 🌟 5. 底部獨立操作按鈕 (放在最後面，確保它永遠在最上層！)
           Positioned(
             bottom: 40,
             left: 0,
@@ -265,31 +265,29 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
               child: GestureDetector(
                 onTap: () {
                   setState(() {
-                    _isBottleFilled = !_isBottleFilled; // 切換滿瓶 / 空瓶狀態
-                  // 🌟 2. 真實紀錄魔法！當瓶子裝滿時，計算分數
-            if (_isBottleFilled) {
-              // 準備一個對照表，對應你目前的四個類別 (請根據你的類別順序調整)
-              List<String> categoryNames = [
-                'Warm Moments', 
-                'Quiet Feelings', 
-                'Emotional Storm', 
-                'Mixed Moods'
-              ];
-              
-              // 取得現在正在哪個類別
-              String currentCategory = categoryNames[_selectedCategoryIndex];
-              
-              // 計算你剛剛點亮了幾顆球 (這就是你要放入的數量！)
-              int selectedCount = _selectedMoods.length; 
-              
-              // 把數量加進我們的小黑板資料庫裡！
-              globalWeeklyData[currentCategory] = (globalWeeklyData[currentCategory] ?? 0) + selectedCount;
-              
-              // (可選) 放入瓶子後，把選取的球清空，為下次做準備
-              _selectedMoods.clear(); 
-            }
-          });
-        },
+                    _isBottleFilled = !_isBottleFilled; 
+                    
+                    // 🌟 寫入日記的紀錄魔法
+                    if (_isBottleFilled) {
+                      List<String> categoryNames = ['Warm Moments', 'Quiet Feelings', 'Emotional Storm', 'Mixed Moods'];
+                      // 🛡️ 加上防護網：預設為第一個類別。
+                      // 只有當 _selectedCategoryIndex 是合法的數字 (0, 1, 2, 3) 時，才去抓對應的名稱！
+                      String currentCategory = 'Warm Moments'; 
+                      if (_selectedCategoryIndex >= 0 && _selectedCategoryIndex < categoryNames.length) {
+                        currentCategory = categoryNames[_selectedCategoryIndex];
+                      }
+                      
+                      for (String mood in _selectedMoods) {
+                        globalMoodHistory.add(MoodRecord(
+                          category: currentCategory,
+                          moodName: mood,
+                          time: DateTime.now(),
+                        ));
+                      }
+                      _selectedMoods.clear(); 
+                    }
+                  }); // 👈 就是這裡的括號剛剛跑丟了！
+                },
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                   decoration: BoxDecoration(
@@ -306,14 +304,14 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                 ),
               ),
             ),
-          ),
-        ],
-        ), // 結束 Stack
-        ), // 🌟 結束 SizedBox (剛剛新加的門)
-      ), // 🌟 結束 ConstrainedBox (剛剛漏關的門)
-    ), // 🌟 結束 Center (剛剛漏關的門)
-  ); // 結束 Scaffold
-  }
+         ), // 結束 Positioned
+          ], // 🌟 1. 把小括號換成中括號，用來結束 Stack 的 children 清單！
+        ), // 🌟 2. 補上這個小括號，用來結束 Stack 本身！
+      ), // 結束 SizedBox (剛剛新加的門)
+    ), // 結束 ConstrainedBox (剛剛漏關的門)
+  ), // 結束 Center (剛剛漏關的門)
+); // 結束 Scaffold
+}
 
   Widget _buildMoodSphere(Map<String, dynamic> mood) {
     final String name = mood['name'];
