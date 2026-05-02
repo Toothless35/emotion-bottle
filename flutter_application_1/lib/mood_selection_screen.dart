@@ -47,7 +47,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
       {'name': loc.moodBored, 'image': 'assets/boring.png'},
       {'name': loc.moodLonely, 'image': 'assets/lonly.png'},
       {'name': loc.moodAnxious, 'image': 'assets/anxious.png'},
-      {'name': loc.moodNervous, 'image': 'assets/nervous.png'},
+      {'name': loc.moodNervous, 'image': 'assets/neverous.png'},
       {'name': loc.moodHesitant, 'image': 'assets/hesitate.png'},
       {'name': loc.moodAwkward, 'image': 'assets/embrassing.png'}, // 如果沒有尷尬的圖，請換成你實際存的檔名
       {'name': loc.moodEnvious, 'image': 'assets/envy.png'},
@@ -109,7 +109,7 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
       switch (_selectedCategoryIndex) {
         case 0: currentBottleImage = 'assets/sltwarm.png'; break;
         case 1: currentBottleImage = 'assets/sltsilent.png'; break;
-        case 2: currentBottleImage = 'assets/sltstorm.png'; break;
+        case 2: currentBottleImage = 'assets/sltstrom.png'; break;
         case 3: currentBottleImage = 'assets/sltweave.png'; break;
       }
     }
@@ -120,7 +120,10 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
       body: Center( // 🌟 讓 App 在大螢幕時置中顯示
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 450), // 🌟 限制最大寬度為 450 (常見手機寬度)
-          child: Stack(
+          // 👇 🌟 加上這個 SizedBox，把 Stack 「強制撐開」到滿屏高度！
+          child: SizedBox(
+            height: screenHeight,
+            child: Stack(
             children: [
               // 背景漸層
               Container(
@@ -153,7 +156,8 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                       onPressed: () => Navigator.pop(context),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  // 👇 1. 把字往下移：這裡的 height 從 10 改成 40，字就會下降
+                  const SizedBox(height: 80),
                   // 漸變文字
                   AnimatedSwitcher(
                     duration: const Duration(milliseconds: 300),
@@ -163,11 +167,14 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                       style: const TextStyle(fontSize: 18, color: Color(0xFF5D4037), fontWeight: FontWeight.w500),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  // 讓字跟瓶子不要太開，這裡設為 0 或 10 即可
+                  const SizedBox(height: 0),
                   // 🌟 用 Expanded 讓瓶子「自動撐滿」剩下的所有安全空間！
+                  // 👇 2. 把瓶子往上移：找到這個 Expanded 裡的 padding
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 40), // 底部留一點白，不跟分類球打架
+                      // 🌟 關鍵在這裡！把 bottom 從 40 加大到 100（甚至 120），底部空間變大，瓶子就會往上升！
+                      padding: const EdgeInsets.only(bottom: 180), // 底部留一點白，不跟分類球打架
                       child: AnimatedSwitcher(
                         duration: const Duration(milliseconds: 300),
                         child: Image.asset(currentBottleImage, key: ValueKey<String>(currentBottleImage), fit: BoxFit.contain),
@@ -179,30 +186,32 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
             ),
           ),
 
-          Align(
-            alignment: Alignment.bottomCenter,
+          // 3. 底部淺黃色面板 (裝 10 顆選項球的區域)
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+            // 🌟 關鍵魔法：空瓶時貼齊底部 (0)；滿瓶時，把它往下推一整個螢幕的高度藏起來！
+            bottom: _isBottleFilled ? -MediaQuery.of(context).size.height : 0, 
+            left: 0,
+            right: 0,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.48,// 🌟 降到底部佔比 48%
-              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.48, 
               decoration: const BoxDecoration(
-                color: Color(0xFFFFF6D9),
+                color: Color(0xFFFFF6D9), // 淺黃色底板
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
                 boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10, offset: Offset(0, -5))],
               ),
               child: Column(
                 children: [
-                  const SizedBox(height: 70),
+                  const SizedBox(height: 70), // 配合你原本設定的高度
                   Expanded(
                     child: SingleChildScrollView(
                       child: Padding(
-                        // 🌟 關鍵在這裡！
-                        // 把 symmetric 換成 only，並保留原本的左右 (20)，然後新增 bottom (40 或更多)
                         padding: const EdgeInsets.only(left: 20, right: 20, bottom: 40),
                         child: Wrap(
-                          spacing: 20,     // 🌟 間距調成 25，確保 4 個一列
-                          runSpacing: 20,  // 🌟 上下間距調成 25
+                          spacing: 20,
+                          runSpacing: 20,
                           alignment: WrapAlignment.center,
-                          // 🌟 換成這個！這樣它才會根據你點的類別去抓對應的球
                           children: allCategoryMoods[_selectedCategoryIndex]
                               .map((mood) => _buildMoodSphere(mood))
                               .toList(),
@@ -210,60 +219,68 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                       ),
                     ),
                   ),
-
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 40, top: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFE8F0F8),
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(color: const Color(0xFFB0C4DE), width: 1.5),
-                          boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2))],
-                        ),
-                        // 🌟 使用字典的按鈕文字
-                        child: Text(
-                          // 🌟 根據狀態切換字典裡的按鈕文字
-                          _isBottleFilled ? loc.reselectMoodBtn : loc.putInBottleBtn,
-                          style: const TextStyle(fontSize: 16, color: Color(0xFF5A7A94), fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ),
+                  const SizedBox(height: 100), 
                 ],
               ),
             ),
           ),
 
           // 4. 分類按鈕列
-          Positioned(
-            // 🌟 關鍵在這裡！把原本的 - 25 改成 + 30，讓球體往下壓
-            top: MediaQuery.of(context).size.height * 0.45 + 30,
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+            // 🌟 關鍵魔法：根據狀態切換高度！
+            // 滿瓶時 (_isBottleFilled = true)：降落到距離底部 130 的位置 (為了不擋住瓶子，並剛好在下方按鈕上面)
+            // 空瓶時 (_isBottleFilled = false)：維持在原本淺黃色底板上方的相對高度
+            bottom: _isBottleFilled ? 130 : MediaQuery.of(context).size.height * 0.48 - 50,
             left: 0,
             right: 0,
-            // 🌟 1. 加入水平滑動魔法，這樣超出螢幕就可以滑動了！
             child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal, 
-              padding: const EdgeInsets.symmetric(horizontal: 20), // 螢幕最左邊和最右邊留一點空白，滑動時視覺更舒適
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 20), // 螢幕左右留一點空白
               child: Row(
-                // ⚠️ 注意：這裡不需要設定 mainAxisAlignment 了，讓它們自然往右排
                 children: List.generate(categories.length, (index) {
                   return Padding(
-                    // 🌟 2. 幫每一顆球單獨加上左右邊距來控制距離！
-                    // 把數字調小（例如 10 甚至 8），它們就會靠得更近
-                    padding: const EdgeInsets.symmetric(horizontal: 5), 
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
                     child: _buildCategoryIcon(index, categories[index]),
                   );
                 }),
               ),
             ),
           ),
+          
+          // 🌟 5. 底部獨立操作按鈕 (貼在 4. 分類按鈕列 的下面， Stack 結束的 ], 前面！)
+          Positioned(
+            bottom: 40,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _isBottleFilled = !_isBottleFilled; // 切換滿瓶 / 空瓶狀態
+                  });
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                  decoration: BoxDecoration(
+                    color: _isBottleFilled ? const Color(0xFFDFEAF5) : const Color(0xFFE8F0F8),
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(color: const Color(0xFFB0C4DE), width: 1.5),
+                    boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2))],
+                  ),
+                  child: Text(
+                    // 根據狀態切換字典裡的按鈕文字
+                    _isBottleFilled ? loc.reselectMoodBtn : loc.putInBottleBtn,
+                    style: const TextStyle(fontSize: 16, color: Color(0xFF5A7A94), fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
         ), // 結束 Stack
+        ), // 🌟 結束 SizedBox (剛剛新加的門)
       ), // 🌟 結束 ConstrainedBox (剛剛漏關的門)
     ), // 🌟 結束 Center (剛剛漏關的門)
   ); // 結束 Scaffold
@@ -333,8 +350,8 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          _selectedCategoryIndex = index; // 🌟 這裡才有 index 可以切換類別
-          _isBottleFilled = false;        // 點擊任何類別時，強制回到「挑選模式」
+         _selectedCategoryIndex = index; // 1. 切換到你點擊的那個類別
+          _isBottleFilled = false;        // 2. 🌟 強制把狀態改回「空瓶」，黃色底板就會自己滑上來！
         });
       },
       child: Column(
