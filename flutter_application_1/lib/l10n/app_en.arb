@@ -153,5 +153,10 @@
   "moodFocused": "Focused",
   "moodHealed": "Healed",
   "moodRelieved": "Relieved",
-  "moodGrowth": "Growth"
+  "moodGrowth": "Growth",
+  "bottleFilledWarm": "Ding! A warm light lights up the bottle",
+  "bottleFilledCalm": "Plop! A quiet moment is just as important",
+  "bottleFilledStorm": "Boom! This strong feeling is safely caught",
+  "bottleFilledMixed": "Clink! You are understood, even without words",
+  "reselectMoodBtn": "Reselect Mood"
 }

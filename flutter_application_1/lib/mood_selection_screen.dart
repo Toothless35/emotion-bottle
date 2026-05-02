@@ -92,14 +92,14 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
     // 🌟 把它們貼在 return Scaffold( 的正上方！
     final screenHeight = MediaQuery.of(context).size.height;
 
-    // 1. 決定現在要顯示的文字
+    // 1. 決定現在要顯示的文字(使用字典變數)
     String currentPromptText = loc.homePromptText;
     if (_isBottleFilled) {
       switch (_selectedCategoryIndex) {
-        case 0: currentPromptText = "叮！溫暖的光，點亮了瓶子"; break;
-        case 1: currentPromptText = "咚！平靜的片刻，同樣重要"; break;
-        case 2: currentPromptText = "碰！這份強烈，被安全接住了"; break;
-        case 3: currentPromptText = "噹！不說清楚，也可以被理解"; break;
+        case 0: currentPromptText = loc.bottleFilledWarm; break;
+        case 1: currentPromptText = loc.bottleFilledCalm; break;
+        case 2: currentPromptText = loc.bottleFilledStorm; break;
+        case 3: currentPromptText = loc.bottleFilledMixed; break;
       }
     }
 
@@ -192,10 +192,12 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        // 🌟 關鍵在這裡！
+                        // 把 symmetric 換成 only，並保留原本的左右 (20)，然後新增 bottom (40 或更多)
+                        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 40),
                         child: Wrap(
-                          spacing: 25,     // 🌟 間距調成 25，確保 4 個一列
-                          runSpacing: 25,  // 🌟 上下間距調成 25
+                          spacing: 20,     // 🌟 間距調成 25，確保 4 個一列
+                          runSpacing: 20,  // 🌟 上下間距調成 25
                           alignment: WrapAlignment.center,
                           // 🌟 換成這個！這樣它才會根據你點的類別去抓對應的球
                           children: allCategoryMoods[_selectedCategoryIndex]
@@ -222,7 +224,8 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
                         ),
                         // 🌟 使用字典的按鈕文字
                         child: Text(
-                          loc.putInBottleBtn,
+                          // 🌟 根據狀態切換字典裡的按鈕文字
+                          _isBottleFilled ? loc.reselectMoodBtn : loc.putInBottleBtn,
                           style: const TextStyle(fontSize: 16, color: Color(0xFF5A7A94), fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -234,19 +237,23 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
           ),
 
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.52 - 40, // 維持你原本的高度設定
+            top: MediaQuery.of(context).size.height * 0.45 - 40,
             left: 0,
             right: 0,
-            // 👇 就是這裡！加入水平滑動魔法
+            // 🌟 1. 加入水平滑動魔法，這樣超出螢幕就可以滑動了！
             child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal, // 讓它可以左右滑動
-              padding: const EdgeInsets.symmetric(horizontal: 10), // 螢幕兩側留一點點空白
+              scrollDirection: Axis.horizontal, 
+              padding: const EdgeInsets.symmetric(horizontal: 20), // 螢幕最左邊和最右邊留一點空白，滑動時視覺更舒適
               child: Row(
-                // ⚠️ 注意：加入滑動後，就不需要原本的 mainAxisAlignment 了
-                children: List.generate(categories.length, (index) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15), // 幫每個按鈕左右加上間距，才不會擠在一起
-                  child: _buildCategoryIcon(index, categories[index]),
-                )),
+                // ⚠️ 注意：這裡不需要設定 mainAxisAlignment 了，讓它們自然往右排
+                children: List.generate(categories.length, (index) {
+                  return Padding(
+                    // 🌟 2. 幫每一顆球單獨加上左右邊距來控制距離！
+                    // 把數字調小（例如 10 甚至 8），它們就會靠得更近
+                    padding: const EdgeInsets.symmetric(horizontal: 10), 
+                    child: _buildCategoryIcon(index, categories[index]),
+                  );
+                }),
               ),
             ),
           ),
@@ -263,11 +270,12 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
     return GestureDetector(
       onTap: () {
         setState(() {
+          // 🌟 這是情緒球原本的邏輯：點擊加入或取消
           if (isSelected) {
             _selectedMoods.remove(name);
           } else {
             _selectedMoods.add(name);
-          }
+          }      // 🌟 點擊任何類別時，強制回到「挑選模式」
         });
       },
       child: AnimatedContainer(
@@ -316,7 +324,12 @@ class _MoodSelectionScreenState extends State<MoodSelectionScreen> {
     final String imagePath = categoryData['image']!; // 抓出圖片路徑
 
     return GestureDetector(
-      onTap: () => setState(() => _selectedCategoryIndex = index),
+      onTap: () {
+        setState(() {
+          _selectedCategoryIndex = index; // 🌟 這裡才有 index 可以切換類別
+          _isBottleFilled = false;        // 點擊任何類別時，強制回到「挑選模式」
+        });
+      },
       child: Column(
         children: [
           // 1. 分類圖示 (使用 Figma 圖片)

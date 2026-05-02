@@ -478,4 +478,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get moodGrowth => 'Growth';
+
+  @override
+  String get bottleFilledWarm => 'Ding! A warm light lights up the bottle';
+
+  @override
+  String get bottleFilledCalm => 'Plop! A quiet moment is just as important';
+
+  @override
+  String get bottleFilledStorm => 'Boom! This strong feeling is safely caught';
+
+  @override
+  String get bottleFilledMixed =>
+      'Clink! You are understood, even without words';
+
+  @override
+  String get reselectMoodBtn => 'Reselect Mood';
 }

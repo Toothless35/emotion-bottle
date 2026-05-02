@@ -153,5 +153,10 @@
   "moodFocused": "專注",
   "moodHealed": "療癒",
   "moodRelieved": "釋懷",
-  "moodGrowth": "成長"
+  "moodGrowth": "成長",
+  "bottleFilledWarm": "叮！溫暖的光，點亮了瓶子",
+  "bottleFilledCalm": "咚！平靜的片刻，同樣重要",
+  "bottleFilledStorm": "碰！這份強烈，被安全接住了",
+  "bottleFilledMixed": "噹！不說清楚，也可以被理解",
+  "reselectMoodBtn": "重新選擇情緒球"
 }

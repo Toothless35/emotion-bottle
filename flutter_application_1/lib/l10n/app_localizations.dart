@@ -973,6 +973,36 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'成長'**
   String get moodGrowth;
+
+  /// No description provided for @bottleFilledWarm.
+  ///
+  /// In zh, this message translates to:
+  /// **'叮！溫暖的光，點亮了瓶子'**
+  String get bottleFilledWarm;
+
+  /// No description provided for @bottleFilledCalm.
+  ///
+  /// In zh, this message translates to:
+  /// **'咚！平靜的片刻，同樣重要'**
+  String get bottleFilledCalm;
+
+  /// No description provided for @bottleFilledStorm.
+  ///
+  /// In zh, this message translates to:
+  /// **'碰！這份強烈，被安全接住了'**
+  String get bottleFilledStorm;
+
+  /// No description provided for @bottleFilledMixed.
+  ///
+  /// In zh, this message translates to:
+  /// **'噹！不說清楚，也可以被理解'**
+  String get bottleFilledMixed;
+
+  /// No description provided for @reselectMoodBtn.
+  ///
+  /// In zh, this message translates to:
+  /// **'重新選擇情緒球'**
+  String get reselectMoodBtn;
 }
 
 class _AppLocalizationsDelegate

@@ -453,4 +453,19 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get moodGrowth => '成長';
+
+  @override
+  String get bottleFilledWarm => '叮！溫暖的光，點亮了瓶子';
+
+  @override
+  String get bottleFilledCalm => '咚！平靜的片刻，同樣重要';
+
+  @override
+  String get bottleFilledStorm => '碰！這份強烈，被安全接住了';
+
+  @override
+  String get bottleFilledMixed => '噹！不說清楚，也可以被理解';
+
+  @override
+  String get reselectMoodBtn => '重新選擇情緒球';
 }
