@@ -494,4 +494,81 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reselectMoodBtn => 'Reselect Mood';
+
+  @override
+  String get shopTabMain => 'Main';
+
+  @override
+  String get shopTabMore => 'More';
+
+  @override
+  String get shopSectionSingle => 'A la carte';
+
+  @override
+  String get shopSectionCombo1 => 'Large & Small Combo (NT\$649)';
+
+  @override
+  String get shopSectionCombo2 => 'Basic Combo (NT\$999)';
+
+  @override
+  String get shopSectionCollab => 'Collaborations';
+
+  @override
+  String get shopItemQuokka => 'QuoQuo (Quokka)';
+
+  @override
+  String get shopItemPenguin => 'Pongo (King Penguin)';
+
+  @override
+  String get shopItemRabbit => 'Hoppy (Netherland Dwarf Rabbit)';
+
+  @override
+  String get shopItemHedgehog => 'Toto (European Hedgehog)';
+
+  @override
+  String get shopItemCactus => 'Cactus';
+
+  @override
+  String get shopItemCookie => 'Round Cookie';
+
+  @override
+  String get shopItemEgg => 'Fried Egg';
+
+  @override
+  String get shopItemCloud => 'Cloud';
+
+  @override
+  String get shopItemPompompurin => 'Pompompurin';
+
+  @override
+  String get shopItemStitch => 'Stitch';
+
+  @override
+  String get shopItemPikachu => 'Pikachu';
+
+  @override
+  String get shopItemPooh => 'Winnie the Pooh';
+
+  @override
+  String get shopSizeLarge => 'Large';
+
+  @override
+  String get shopSizeSmall => 'Small';
+
+  @override
+  String get shopAddToCartBtn => 'Add to Cart';
+
+  @override
+  String shopAddedToCartMsg(int quantity) {
+    return 'Successfully added $quantity items to the cart!';
+  }
+
+  @override
+  String get shopDropdownHint => 'Please select...';
+
+  @override
+  String get shopSelectSizeWarning => 'Please select a size first!';
+
+  @override
+  String get shopItemBuiltInModule => 'Built-in Module';
 }

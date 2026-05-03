@@ -1003,6 +1003,156 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'重新選擇情緒球'**
   String get reselectMoodBtn;
+
+  /// No description provided for @shopTabMain.
+  ///
+  /// In zh, this message translates to:
+  /// **'主要'**
+  String get shopTabMain;
+
+  /// No description provided for @shopTabMore.
+  ///
+  /// In zh, this message translates to:
+  /// **'更多'**
+  String get shopTabMore;
+
+  /// No description provided for @shopSectionSingle.
+  ///
+  /// In zh, this message translates to:
+  /// **'單選'**
+  String get shopSectionSingle;
+
+  /// No description provided for @shopSectionCombo1.
+  ///
+  /// In zh, this message translates to:
+  /// **'一大一小組合 (NT\$649)'**
+  String get shopSectionCombo1;
+
+  /// No description provided for @shopSectionCombo2.
+  ///
+  /// In zh, this message translates to:
+  /// **'基礎組合 (NT\$999)'**
+  String get shopSectionCombo2;
+
+  /// No description provided for @shopSectionCollab.
+  ///
+  /// In zh, this message translates to:
+  /// **'聯名款'**
+  String get shopSectionCollab;
+
+  /// No description provided for @shopItemQuokka.
+  ///
+  /// In zh, this message translates to:
+  /// **'葵葵 (短尾矮袋鼠)'**
+  String get shopItemQuokka;
+
+  /// No description provided for @shopItemPenguin.
+  ///
+  /// In zh, this message translates to:
+  /// **'絨絨 (小國王企鵝)'**
+  String get shopItemPenguin;
+
+  /// No description provided for @shopItemRabbit.
+  ///
+  /// In zh, this message translates to:
+  /// **'蹦蹦 (荷蘭侏儒兔)'**
+  String get shopItemRabbit;
+
+  /// No description provided for @shopItemHedgehog.
+  ///
+  /// In zh, this message translates to:
+  /// **'糰糰 (歐洲刺蝟)'**
+  String get shopItemHedgehog;
+
+  /// No description provided for @shopItemCactus.
+  ///
+  /// In zh, this message translates to:
+  /// **'仙人掌'**
+  String get shopItemCactus;
+
+  /// No description provided for @shopItemCookie.
+  ///
+  /// In zh, this message translates to:
+  /// **'圓餅'**
+  String get shopItemCookie;
+
+  /// No description provided for @shopItemEgg.
+  ///
+  /// In zh, this message translates to:
+  /// **'荷包蛋'**
+  String get shopItemEgg;
+
+  /// No description provided for @shopItemCloud.
+  ///
+  /// In zh, this message translates to:
+  /// **'雲朵'**
+  String get shopItemCloud;
+
+  /// No description provided for @shopItemPompompurin.
+  ///
+  /// In zh, this message translates to:
+  /// **'布丁狗'**
+  String get shopItemPompompurin;
+
+  /// No description provided for @shopItemStitch.
+  ///
+  /// In zh, this message translates to:
+  /// **'史迪奇'**
+  String get shopItemStitch;
+
+  /// No description provided for @shopItemPikachu.
+  ///
+  /// In zh, this message translates to:
+  /// **'皮卡丘'**
+  String get shopItemPikachu;
+
+  /// No description provided for @shopItemPooh.
+  ///
+  /// In zh, this message translates to:
+  /// **'小熊維尼'**
+  String get shopItemPooh;
+
+  /// No description provided for @shopSizeLarge.
+  ///
+  /// In zh, this message translates to:
+  /// **'大'**
+  String get shopSizeLarge;
+
+  /// No description provided for @shopSizeSmall.
+  ///
+  /// In zh, this message translates to:
+  /// **'小'**
+  String get shopSizeSmall;
+
+  /// No description provided for @shopAddToCartBtn.
+  ///
+  /// In zh, this message translates to:
+  /// **'加入購物車'**
+  String get shopAddToCartBtn;
+
+  /// No description provided for @shopAddedToCartMsg.
+  ///
+  /// In zh, this message translates to:
+  /// **'成功加入 {quantity} 件商品至購物車！'**
+  String shopAddedToCartMsg(int quantity);
+
+  /// No description provided for @shopDropdownHint.
+  ///
+  /// In zh, this message translates to:
+  /// **'請選擇...'**
+  String get shopDropdownHint;
+
+  /// No description provided for @shopSelectSizeWarning.
+  ///
+  /// In zh, this message translates to:
+  /// **'請先選擇大小款式喔！'**
+  String get shopSelectSizeWarning;
+
+  /// No description provided for @shopItemBuiltInModule.
+  ///
+  /// In zh, this message translates to:
+  /// **'內建模組'**
+  String get shopItemBuiltInModule;
 }
 
 class _AppLocalizationsDelegate

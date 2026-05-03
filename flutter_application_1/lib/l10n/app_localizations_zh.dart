@@ -468,4 +468,81 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get reselectMoodBtn => '重新選擇情緒球';
+
+  @override
+  String get shopTabMain => '主要';
+
+  @override
+  String get shopTabMore => '更多';
+
+  @override
+  String get shopSectionSingle => '單選';
+
+  @override
+  String get shopSectionCombo1 => '一大一小組合 (NT\$649)';
+
+  @override
+  String get shopSectionCombo2 => '基礎組合 (NT\$999)';
+
+  @override
+  String get shopSectionCollab => '聯名款';
+
+  @override
+  String get shopItemQuokka => '葵葵 (短尾矮袋鼠)';
+
+  @override
+  String get shopItemPenguin => '絨絨 (小國王企鵝)';
+
+  @override
+  String get shopItemRabbit => '蹦蹦 (荷蘭侏儒兔)';
+
+  @override
+  String get shopItemHedgehog => '糰糰 (歐洲刺蝟)';
+
+  @override
+  String get shopItemCactus => '仙人掌';
+
+  @override
+  String get shopItemCookie => '圓餅';
+
+  @override
+  String get shopItemEgg => '荷包蛋';
+
+  @override
+  String get shopItemCloud => '雲朵';
+
+  @override
+  String get shopItemPompompurin => '布丁狗';
+
+  @override
+  String get shopItemStitch => '史迪奇';
+
+  @override
+  String get shopItemPikachu => '皮卡丘';
+
+  @override
+  String get shopItemPooh => '小熊維尼';
+
+  @override
+  String get shopSizeLarge => '大';
+
+  @override
+  String get shopSizeSmall => '小';
+
+  @override
+  String get shopAddToCartBtn => '加入購物車';
+
+  @override
+  String shopAddedToCartMsg(int quantity) {
+    return '成功加入 $quantity 件商品至購物車！';
+  }
+
+  @override
+  String get shopDropdownHint => '請選擇...';
+
+  @override
+  String get shopSelectSizeWarning => '請先選擇大小款式喔！';
+
+  @override
+  String get shopItemBuiltInModule => '內建模組';
 }

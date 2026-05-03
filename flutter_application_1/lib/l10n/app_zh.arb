@@ -158,5 +158,37 @@
   "bottleFilledCalm": "咚！平靜的片刻，同樣重要",
   "bottleFilledStorm": "碰！這份強烈，被安全接住了",
   "bottleFilledMixed": "噹！不說清楚，也可以被理解",
-  "reselectMoodBtn": "重新選擇情緒球"
+  "reselectMoodBtn": "重新選擇情緒球",
+  "shopTabMain": "主要",
+  "shopTabMore": "更多",
+  "shopSectionSingle": "單選",
+  "shopSectionCombo1": "一大一小組合 (NT$649)",
+  "shopSectionCombo2": "基礎組合 (NT$999)",
+  "shopSectionCollab": "聯名款",
+  "shopItemQuokka": "葵葵 (短尾矮袋鼠)",
+  "shopItemPenguin": "絨絨 (小國王企鵝)",
+  "shopItemRabbit": "蹦蹦 (荷蘭侏儒兔)",
+  "shopItemHedgehog": "糰糰 (歐洲刺蝟)",
+  "shopItemCactus": "仙人掌",
+  "shopItemCookie": "圓餅",
+  "shopItemEgg": "荷包蛋",
+  "shopItemCloud": "雲朵",
+  "shopItemPompompurin": "布丁狗",
+  "shopItemStitch": "史迪奇",
+  "shopItemPikachu": "皮卡丘",
+  "shopItemPooh": "小熊維尼",
+  "shopSizeLarge": "大",
+  "shopSizeSmall": "小",
+  "shopAddToCartBtn": "加入購物車",
+  "shopAddedToCartMsg": "成功加入 {quantity} 件商品至購物車！",
+  "@shopAddedToCartMsg": {
+    "placeholders": {
+      "quantity": {
+        "type": "int"
+      }
+    }
+  },
+  "shopDropdownHint": "請選擇...",
+  "shopSelectSizeWarning": "請先選擇大小款式喔！",
+  "shopItemBuiltInModule": "內建模組"
 }

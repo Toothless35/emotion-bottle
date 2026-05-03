@@ -158,5 +158,37 @@
   "bottleFilledCalm": "Plop! A quiet moment is just as important",
   "bottleFilledStorm": "Boom! This strong feeling is safely caught",
   "bottleFilledMixed": "Clink! You are understood, even without words",
-  "reselectMoodBtn": "Reselect Mood"
+  "reselectMoodBtn": "Reselect Mood",
+  "shopTabMain": "Main",
+  "shopTabMore": "More",
+  "shopSectionSingle": "A la carte",
+  "shopSectionCombo1": "Large & Small Combo (NT$649)",
+  "shopSectionCombo2": "Basic Combo (NT$999)",
+  "shopSectionCollab": "Collaborations",
+  "shopItemQuokka": "QuoQuo (Quokka)",
+  "shopItemPenguin": "Pongo (King Penguin)",
+  "shopItemRabbit": "Hoppy (Netherland Dwarf Rabbit)",
+  "shopItemHedgehog": "Toto (European Hedgehog)",
+  "shopItemCactus": "Cactus",
+  "shopItemCookie": "Round Cookie",
+  "shopItemEgg": "Fried Egg",
+  "shopItemCloud": "Cloud",
+  "shopItemPompompurin": "Pompompurin",
+  "shopItemStitch": "Stitch",
+  "shopItemPikachu": "Pikachu",
+  "shopItemPooh": "Winnie the Pooh",
+  "shopSizeLarge": "Large",
+  "shopSizeSmall": "Small",
+  "shopAddToCartBtn": "Add to Cart",
+  "shopAddedToCartMsg": "Successfully added {quantity} items to the cart!",
+  "@shopAddedToCartMsg": {
+    "placeholders": {
+      "quantity": {
+        "type": "int"
+      }
+    }
+  },
+  "shopDropdownHint": "Please select...",
+  "shopSelectSizeWarning": "Please select a size first!",
+  "shopItemBuiltInModule": "Built-in Module"
 }

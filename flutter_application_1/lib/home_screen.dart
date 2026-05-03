@@ -6,7 +6,7 @@ import 'quiz_pager_screen.dart'; // 🌟 引入波浪剪裁器
 
 // 🌟 引入其他三個分頁檔案
 import 'data_screen.dart';
-import 'store_screen.dart';
+import 'shop_screen.dart';
 import 'profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final List<Widget> pages = [
       const HomeContent(), // 首頁內容 (我們把它獨立寫在檔案最下方)
       const DataScreen(),  // 數據頁
-      const StoreScreen(), // 商城頁
+      const ShopScreen(), // 商城頁
       const ProfileScreen(),// 個人頁
     ];
 
