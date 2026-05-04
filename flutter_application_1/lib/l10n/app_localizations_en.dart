@@ -631,4 +631,120 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dialogCancel => 'Cancel';
+
+  @override
+  String shippingEstDate(int month, int day) {
+    return 'Est. Delivery $month/$day';
+  }
+
+  @override
+  String get addAddressTitle => 'Add Address';
+
+  @override
+  String get addAddressSection => 'Address';
+
+  @override
+  String get addAddressName => 'Full Name';
+
+  @override
+  String get addAddressPhone => 'Phone Number';
+
+  @override
+  String get addAddressZip => 'Zip Code';
+
+  @override
+  String get addAddressCity => 'City, District';
+
+  @override
+  String get addAddressStreet => 'Street, Alley, Number, Floor';
+
+  @override
+  String get addAddressDefault => 'Set as Default';
+
+  @override
+  String get addAddressTag => 'Tag as:';
+
+  @override
+  String get addAddressTagWork => 'Work';
+
+  @override
+  String get addAddressTagHome => 'Home';
+
+  @override
+  String get addAddressSubmit => 'Submit';
+
+  @override
+  String get shippingErrFillAddress => 'Please fill in all address details!';
+
+  @override
+  String get shippingErrSelectMethod =>
+      'Please select a shipping method and address!';
+
+  @override
+  String get paymentTitle => 'Payment Method';
+
+  @override
+  String get paymentCOD => 'Cash on Delivery';
+
+  @override
+  String get paymentCreditCard => 'Credit/Debit Card';
+
+  @override
+  String get paymentAddCard => 'Add Credit Card';
+
+  @override
+  String get paymentConfirm => 'Confirm';
+
+  @override
+  String get paymentErrSelect => 'Please select a payment method!';
+
+  @override
+  String get paymentErrFillCard => 'Please enter the card number!';
+
+  @override
+  String get paymentCardHint => 'Enter card number';
+
+  @override
+  String get orderSuccessTitle => 'Order Received!';
+
+  @override
+  String get orderSuccessMessage =>
+      'Thank you for your purchase.\nWe will process your order soon.';
+
+  @override
+  String get orderSuccessBackHome => 'Back to Store';
+
+  @override
+  String get checkoutErrIncomplete =>
+      'Please select shipping and payment methods!';
+
+  @override
+  String get checkoutTermsPrefix => 'By checking out, you agree to the ';
+
+  @override
+  String get checkoutTermsLink => 'Terms & Conditions.';
+
+  @override
+  String get termsPageTitle => 'Terms & Conditions';
+
+  @override
+  String get termsContentP1 =>
+      'By continuing to checkout, you agree that third-party vendors such as ECHO, Trade-Van, and logistics service providers will collect shopping information (including personal data) in this order according to the ';
+
+  @override
+  String get termsContentLink => 'Privacy Policy';
+
+  @override
+  String get termsContentP2 =>
+      ' for the purpose of order delivery, completing transactions, and inventory management.';
+
+  @override
+  String get privacyPolicyTitle => 'Privacy Policy';
+
+  @override
+  String get privacyPolicyContent =>
+      'Privacy Policy: By using this app, you agree to the Terms of Use.\nWe Value Your Privacy. We process your data in accordance with privacy regulations.\nWe would like to use your Google Ads ID to measure ad performance and detect suspicious fraud activities. It will never be used for ad targeting. This information helps us improve our services and provide a better experience.\nGoogle Ads ID respects user privacy and never provides any personal data of the user.';
+
+  @override
+  String get dialogClose => 'Close';
 }

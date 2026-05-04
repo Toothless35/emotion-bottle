@@ -1259,6 +1259,222 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'取消'**
   String get dialogCancel;
+
+  /// No description provided for @shippingEstDate.
+  ///
+  /// In zh, this message translates to:
+  /// **'預計配達時間 {month}月{day}日'**
+  String shippingEstDate(int month, int day);
+
+  /// No description provided for @addAddressTitle.
+  ///
+  /// In zh, this message translates to:
+  /// **'新增地址'**
+  String get addAddressTitle;
+
+  /// No description provided for @addAddressSection.
+  ///
+  /// In zh, this message translates to:
+  /// **'地址'**
+  String get addAddressSection;
+
+  /// No description provided for @addAddressName.
+  ///
+  /// In zh, this message translates to:
+  /// **'全名'**
+  String get addAddressName;
+
+  /// No description provided for @addAddressPhone.
+  ///
+  /// In zh, this message translates to:
+  /// **'手機號碼'**
+  String get addAddressPhone;
+
+  /// No description provided for @addAddressZip.
+  ///
+  /// In zh, this message translates to:
+  /// **'郵遞區號'**
+  String get addAddressZip;
+
+  /// No description provided for @addAddressCity.
+  ///
+  /// In zh, this message translates to:
+  /// **'城市，區'**
+  String get addAddressCity;
+
+  /// No description provided for @addAddressStreet.
+  ///
+  /// In zh, this message translates to:
+  /// **'街道，巷弄，門號，樓層'**
+  String get addAddressStreet;
+
+  /// No description provided for @addAddressDefault.
+  ///
+  /// In zh, this message translates to:
+  /// **'設為預設地址'**
+  String get addAddressDefault;
+
+  /// No description provided for @addAddressTag.
+  ///
+  /// In zh, this message translates to:
+  /// **'標記為：'**
+  String get addAddressTag;
+
+  /// No description provided for @addAddressTagWork.
+  ///
+  /// In zh, this message translates to:
+  /// **'工作'**
+  String get addAddressTagWork;
+
+  /// No description provided for @addAddressTagHome.
+  ///
+  /// In zh, this message translates to:
+  /// **'住家'**
+  String get addAddressTagHome;
+
+  /// No description provided for @addAddressSubmit.
+  ///
+  /// In zh, this message translates to:
+  /// **'提交'**
+  String get addAddressSubmit;
+
+  /// No description provided for @shippingErrFillAddress.
+  ///
+  /// In zh, this message translates to:
+  /// **'請完整填寫地址資訊！'**
+  String get shippingErrFillAddress;
+
+  /// No description provided for @shippingErrSelectMethod.
+  ///
+  /// In zh, this message translates to:
+  /// **'請選擇物流與收件地址！'**
+  String get shippingErrSelectMethod;
+
+  /// No description provided for @paymentTitle.
+  ///
+  /// In zh, this message translates to:
+  /// **'付款方式'**
+  String get paymentTitle;
+
+  /// No description provided for @paymentCOD.
+  ///
+  /// In zh, this message translates to:
+  /// **'貨到付款'**
+  String get paymentCOD;
+
+  /// No description provided for @paymentCreditCard.
+  ///
+  /// In zh, this message translates to:
+  /// **'信用卡/金融卡'**
+  String get paymentCreditCard;
+
+  /// No description provided for @paymentAddCard.
+  ///
+  /// In zh, this message translates to:
+  /// **'新增信用卡'**
+  String get paymentAddCard;
+
+  /// No description provided for @paymentConfirm.
+  ///
+  /// In zh, this message translates to:
+  /// **'確認'**
+  String get paymentConfirm;
+
+  /// No description provided for @paymentErrSelect.
+  ///
+  /// In zh, this message translates to:
+  /// **'請選擇付款方式！'**
+  String get paymentErrSelect;
+
+  /// No description provided for @paymentErrFillCard.
+  ///
+  /// In zh, this message translates to:
+  /// **'請完整輸入信用卡號！'**
+  String get paymentErrFillCard;
+
+  /// No description provided for @paymentCardHint.
+  ///
+  /// In zh, this message translates to:
+  /// **'請輸入信用卡號'**
+  String get paymentCardHint;
+
+  /// No description provided for @orderSuccessTitle.
+  ///
+  /// In zh, this message translates to:
+  /// **'訂單已成立！'**
+  String get orderSuccessTitle;
+
+  /// No description provided for @orderSuccessMessage.
+  ///
+  /// In zh, this message translates to:
+  /// **'感謝您的購買，\n我們將盡快為您安排出貨。'**
+  String get orderSuccessMessage;
+
+  /// No description provided for @orderSuccessBackHome.
+  ///
+  /// In zh, this message translates to:
+  /// **'回到商城'**
+  String get orderSuccessBackHome;
+
+  /// No description provided for @checkoutErrIncomplete.
+  ///
+  /// In zh, this message translates to:
+  /// **'請選擇寄送與付款方式！'**
+  String get checkoutErrIncomplete;
+
+  /// No description provided for @checkoutTermsPrefix.
+  ///
+  /// In zh, this message translates to:
+  /// **'結帳即表示您同意我們的'**
+  String get checkoutTermsPrefix;
+
+  /// No description provided for @checkoutTermsLink.
+  ///
+  /// In zh, this message translates to:
+  /// **'條款與規則。'**
+  String get checkoutTermsLink;
+
+  /// No description provided for @termsPageTitle.
+  ///
+  /// In zh, this message translates to:
+  /// **'條款與規則'**
+  String get termsPageTitle;
+
+  /// No description provided for @termsContentP1.
+  ///
+  /// In zh, this message translates to:
+  /// **'繼續進行結帳操作即視為您同意由ECHO、關貿網路及物流服務提供商等第三方廠商依據'**
+  String get termsContentP1;
+
+  /// No description provided for @termsContentLink.
+  ///
+  /// In zh, this message translates to:
+  /// **'隱私權政策'**
+  String get termsContentLink;
+
+  /// No description provided for @termsContentP2.
+  ///
+  /// In zh, this message translates to:
+  /// **'蒐集此訂單中的購物資訊（包含個資），以作為訂單配送、完成交易及庫存管理之用。'**
+  String get termsContentP2;
+
+  /// No description provided for @privacyPolicyTitle.
+  ///
+  /// In zh, this message translates to:
+  /// **'隱私權政策'**
+  String get privacyPolicyTitle;
+
+  /// No description provided for @privacyPolicyContent.
+  ///
+  /// In zh, this message translates to:
+  /// **'（隱私政策：使用此應用程式，即表示您同意其使用條款。\n我們重視您的隱私權，我們根據隱私法規處理您的資料。我們希望使用您的 Google Ads ID 來衡量廣告成效，並偵測可疑的欺詐活動，絕不會用於廣告定位功能。這項資訊有助於我們改進服務，提供更好的體驗。Google Ads ID 以尊重使用者隱私為依歸，絕不提供使用者的任何個人資料。）'**
+  String get privacyPolicyContent;
+
+  /// No description provided for @dialogClose.
+  ///
+  /// In zh, this message translates to:
+  /// **'關閉'**
+  String get dialogClose;
 }
 
 class _AppLocalizationsDelegate

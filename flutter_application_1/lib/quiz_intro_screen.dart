@@ -91,7 +91,11 @@ class QuizIntroScreen extends StatelessWidget {
                   ),
                   // --------------------------------
 
-                  const Spacer(), // 自動撐開中間的空間
+                  // ❌ 刪除這行
+                  // const Spacer(), // 自動撐開中間的空間
+
+                  // ✅ 換成這行 (你可以自由調整這個數字來決定星星和按鈕之間的距離)
+                  const SizedBox(height: 40), // 自動撐開中間的空間
 
                   // ================= 【開始探索按鈕】 =================
                   Padding(

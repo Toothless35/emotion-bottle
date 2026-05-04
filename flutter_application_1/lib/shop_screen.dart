@@ -1,6 +1,14 @@
+import 'package:flutter/gestures.dart'; // 🌟 負責處理 RichText 點擊的必備套件
 import 'package:flutter/material.dart';
 // 🌟 記得確認這裡的路徑是否符合你專案中的自動生成路徑
 import 'l10n/app_localizations.dart';
+
+// 🌟 貼在這裡！在所有 class 的外面，它才是真正的「全域變數」！
+// 🌟 模擬雲端資料庫：儲存使用者的物流與地址紀錄
+List<Map<String, dynamic>>? globalShippingMethods;
+
+// 🌟 模擬雲端資料庫：儲存使用者的信用卡紀錄
+List<String>? globalCreditCards;
 
 class ShopScreen extends StatefulWidget {
   const ShopScreen({super.key});
@@ -13,6 +21,7 @@ class _ShopScreenState extends State<ShopScreen> {
   int _selectedTabIndex = 0;
   // 🌟 1. 真正的購物車清單存放區
   List<CartItem> myCart = [];
+  
 
   // 🌟 2. 把原本的數字變數，改成「自動計算 myCart 裡面總數」的智慧函數
   int get _cartTotalQuantity {
@@ -992,9 +1001,24 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   String? _remarks; // 儲存使用者的備註
-  
-  // 儲存目前選中的物流資訊
-  Map<String, dynamic>? _selectedShipping; 
+
+  // 🌟 把多出來的 _selectedShipping 刪掉，只留付款的變數就好！
+  Map<String, dynamic>? _selectedPayment;
+
+  void _selectPayment() async {
+    final result = await Navigator.push(
+      context, 
+      MaterialPageRoute(builder: (context) => PaymentScreen(currentSelection: _selectedPayment)),
+    );
+    if (result != null) {
+      setState(() { 
+        _selectedPayment = result;
+      });
+    }
+  }
+
+  // 儲存目前選中的物流資訊 (這是你原本就有的，保留它！)
+  Map<String, dynamic>? _selectedShipping;
 
   int get itemsTotal {
     return widget.items.fold(0, (sum, item) => sum + item.subtotal);
@@ -1103,8 +1127,27 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ],
           ),
           const SizedBox(height: 20),
-          _buildInfoRow(loc.checkoutPaymentMethod, loc.checkoutViewAll, isAction: true, onTap: () {}),
-          const SizedBox(height: 40),
+          // 🌟 5. 付款方式與選擇結果顯示
+          _buildInfoRow(loc.checkoutPaymentMethod, loc.checkoutViewAll, isAction: true, onTap: _selectPayment),
+          if (_selectedPayment != null) ...[
+            const SizedBox(height: 10),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(color: const Color(0xFFF4DFDD), borderRadius: BorderRadius.circular(10)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(_selectedPayment!['methodName'], style: const TextStyle(color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
+                  if (_selectedPayment!['card'] != null) ...[
+                    const SizedBox(height: 5),
+                    Text('**** **** **** ${_selectedPayment!['card'].length > 4 ? _selectedPayment!['card'].substring(_selectedPayment!['card'].length - 4) : _selectedPayment!['card']}', 
+                         style: const TextStyle(color: Color(0xFF5D4037), fontSize: 13)),
+                  ]
+                ],
+              ),
+            ),
+          ],
         ],
       ),
       bottomNavigationBar: _buildBottomCheckoutBar(loc),
@@ -1170,13 +1213,46 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(loc.checkoutTerms, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+            // 🌟 升級版的條款連結文字
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: const TextStyle(fontSize: 12, color: Colors.grey), // 預設灰色字體
+                  children: [
+                    TextSpan(text: loc.checkoutTermsPrefix),
+                    TextSpan(
+                      text: loc.checkoutTermsLink,
+                      style: const TextStyle(color: Colors.lightBlue, fontWeight: FontWeight.bold), // 淺藍色連結
+                      recognizer: TapGestureRecognizer()..onTap = () {
+                        // 點擊後跳轉到條款與規則頁面
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const TermsScreen()));
+                      },
+                    ),
+                  ],
+                ),
+              ),
             const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('\$$finalTotal', style: const TextStyle(fontSize: 20, color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
-                Container(
+                // 🌟 從 221 行開始，替換成這整段：
+              InkWell(
+                onTap: () {
+                  // 1. 防呆機制：如果沒選物流或沒選付款方式，跳出警告並阻擋結帳
+                  if (_selectedShipping == null || _selectedPayment == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(loc.checkoutErrIncomplete)));
+                    return;
+                  }
+                  
+                  // 2. 結帳成功！跳轉到成功頁面
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const OrderSuccessScreen()),
+                    (route) => route.isFirst, // 魔法導航：清掉中間過程，保留首頁
+                  );
+                },
+                child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                   decoration: BoxDecoration(
                     color: const Color(0xFFEABDBA),
@@ -1185,13 +1261,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
                   child: Text(loc.checkoutBtn, style: const TextStyle(fontSize: 16, color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
                 ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+              ),
+              ], // 結束 Row 的 children
+            ), // 結束 Row
+          ], // 結束 Column 的 children
+        ), // 結束 Column
+      ), // 結束 裝背景色的 Container
+    ); // 結束 SafeArea 並回傳 (return)
+  } // 結束 _buildBottomCheckoutBar 函數
 }
 
 // ==========================================
@@ -1206,28 +1283,41 @@ class ShippingScreen extends StatefulWidget {
 }
 
 class _ShippingScreenState extends State<ShippingScreen> {
-  // 模擬物流資料庫
-  final List<Map<String, dynamic>> shippingMethods = [
-    {
-      'id': '711', 'name': '7-ELEVEN', 'price': 60, 'date': '預計配達時間 5月7日',
-      'addresses': ['八田與一\n(+886) 904 492 026\n104 台北市基隆路四段43號 第一宿舍 5003-4']
-    },
-    {
-      'id': 'kerry', 'name': '嘉里快遞', 'price': 65, 'date': '預計配達時間 5月8日',
-      'addresses': [
-        '八田與一\n(+886) 904 492 026\n104 台北市基隆路四段43號 第一宿舍 5003-4',
-        '阿凡達\n(+886) 904 492 054\n100 宇宙市星星路四段43號 第一倉庫 5003-4'
-      ]
-    },
-  ];
+  String? _expandedId; 
+  String? _selectedAddress; 
+  late List<Map<String, dynamic>> shippingMethods;
 
-  String? _expandedId; // 記錄目前展開的是哪一家物流
-  String? _selectedAddress; // 記錄目前選擇的地址
-
-  @override
+ @override
   void initState() {
     super.initState();
-    // 進入頁面時，如果有預設選中的資料，就把它展開並選中
+    
+    // 🌟 1. 檢查「全域資料庫」是否已經有資料了？
+    if (globalShippingMethods == null) {
+      // 如果是空的 (第一次進來)，就建立初始資料
+      DateTime today = DateTime.now();
+      globalShippingMethods = [
+        {'id': '711', 'name': '7-ELEVEN', 'price': 60, 'daysAdd': 2, 'addresses': <String>[]},
+        {'id': 'family', 'name': '全家', 'price': 60, 'daysAdd': 3, 'addresses': <String>[]},
+        {'id': 'hilife', 'name': '萊爾富', 'price': 50, 'daysAdd': 4, 'addresses': <String>[]},
+        {'id': 'hct', 'name': '新竹物流', 'price': 65, 'daysAdd': 3, 'addresses': <String>[]},
+        {'id': 'tcat', 'name': '黑貓宅急便', 'price': 90, 'daysAdd': 2, 'addresses': <String>[]},
+        {'id': 'kerry', 'name': '嘉里快遞', 'price': 65, 'daysAdd': 3, 'addresses': <String>[
+          '八田與一\n(+886) 904 492 026\n104 台北市基隆路四段43號 第一宿舍 5003-4',
+          '阿凡達\n(+886) 904 492 054\n100 宇宙市星星路四段43號 第一倉庫 5003-4'
+        ]},
+      ];
+
+      // 動態計算預計日期並存入
+      for (var method in globalShippingMethods!) {
+        DateTime estDate = today.add(Duration(days: method['daysAdd']));
+        method['estDate'] = estDate;
+      }
+    }
+
+    // 🌟 2. 將這個頁面的清單，指向我們剛剛設定好的全域資料庫！
+    shippingMethods = globalShippingMethods!;
+
+    // 處理進入頁面時的預設選中狀態
     if (widget.currentSelection != null) {
       _expandedId = widget.currentSelection!['methodId'];
       _selectedAddress = widget.currentSelection!['address'];
@@ -1256,62 +1346,128 @@ class _ShippingScreenState extends State<ShippingScreen> {
         itemBuilder: (context, index) {
           final method = shippingMethods[index];
           final isExpanded = _expandedId == method['id'];
+          DateTime date = method['estDate'];
 
           return Container(
             margin: const EdgeInsets.only(bottom: 15),
+            clipBehavior: Clip.hardEdge, // 讓圓角完美裁切內部的底色
             decoration: BoxDecoration(
-              color: isExpanded ? const Color(0xFFF4DFDD) : Colors.transparent, // 展開時變成粉紅色背景
               borderRadius: BorderRadius.circular(10),
-              border: isExpanded ? Border.all(color: const Color(0xFFEABDBA), width: 2) : null,
+              border: isExpanded ? Border.all(color: const Color(0xFFEABDBA), width: 1.5) : Border.all(color: Colors.transparent),
             ),
             child: Column(
               children: [
-                // 物流標題列
-                ListTile(
-                  title: Text(method['name'], style: const TextStyle(color: Color(0xFF5D4037), fontSize: 16)),
-                  subtitle: Text(method['date'], style: const TextStyle(color: Color(0xFF8B6E60), fontSize: 12)),
-                  trailing: isExpanded 
-                    ? const Icon(Icons.check, color: Colors.redAccent) 
-                    : Text('\$${method['price']}', style: const TextStyle(color: Color(0xFF5D4037), fontSize: 16)),
-                  onTap: () {
-                    setState(() {
-                      if (_expandedId == method['id']) {
-                        _expandedId = null; // 點擊已展開的會縮起來
-                      } else {
-                        _expandedId = method['id'];
-                        _selectedAddress = method['addresses'][0]; // 預設選中該物流的第一個地址
-                      }
-                    });
-                  },
+                // 🌟 上半部標題 (選中時變成黃底)
+                Container(
+                  color: isExpanded ? const Color(0xFFFFF3DB) : Colors.transparent, // Figma上的黃底
+                  child: ListTile(
+                    title: Text(method['name'], style: const TextStyle(color: Color(0xFF5D4037), fontSize: 16)),
+                    subtitle: Text(loc.shippingEstDate(date.month, date.day), style: const TextStyle(color: Color(0xFF8B6E60), fontSize: 12)),
+                    trailing: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('\$${method['price']}', style: const TextStyle(color: Color(0xFF5D4037), fontSize: 16)),
+                        // 🌟 選中時顯示紅色勾勾
+                        if (isExpanded) const Icon(Icons.check, color: Colors.redAccent, size: 20), 
+                      ],
+                    ),
+                    onTap: () {
+                      setState(() {
+                        if (_expandedId == method['id']) {
+                          _expandedId = null; 
+                        } else {
+                          _expandedId = method['id'];
+                          if (method['addresses'].isNotEmpty) {
+                            _selectedAddress = method['addresses'][0]; 
+                          } else {
+                            _selectedAddress = null; // 如果這個物流還沒建立地址，就設為空
+                          }
+                        }
+                      });
+                    },
+                  ),
                 ),
-                // 展開後的地址選項
-                if (isExpanded) ...[
-                  const Divider(color: Color(0xFFEABDBA), height: 1),
-                  ...List.generate(method['addresses'].length, (addrIndex) {
-                    final addr = method['addresses'][addrIndex];
-                    return RadioListTile<String>(
-                      value: addr,
-                      groupValue: _selectedAddress,
-                      activeColor: const Color(0xFF5D4037),
-                      title: Text(addr, style: const TextStyle(color: Color(0xFF5D4037), fontSize: 13, height: 1.5)),
-                      onChanged: (val) => setState(() => _selectedAddress = val),
-                    );
-                  }),
-                  // 新增地址按鈕
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20, bottom: 15, top: 5),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: InkWell(
-                        onTap: () {
-                           // 這裡可以串接「新增地址」的頁面或邏輯
-                           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('開發中：準備跳轉新增地址頁面')));
-                        },
-                        child: Text(loc.shippingAddAddress, style: const TextStyle(color: Color(0xFF8B6E60))),
-                      ),
+                // 🌟 下半部地址選項 (選中時展開淺粉色底)
+                if (isExpanded)
+                  Container(
+                    color: const Color(0xFFF4DFDD), // 淺粉色底
+                    child: Column(
+                      children: [
+                        const Divider(color: Color(0xFFEABDBA), height: 1, thickness: 1),
+                        ...List.generate(method['addresses'].length, (addrIndex) {
+                          final addr = method['addresses'][addrIndex];
+                          return InkWell(
+                            onTap: () => setState(() => _selectedAddress = addr),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), // 稍微縮小上下間距，讓排版更緊湊
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // 左側圓圈
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10), // 微調圓圈位置，對齊文字第一行
+                                    child: Icon(
+                                      _selectedAddress == addr ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+                                      color: const Color(0xFF5D4037),
+                                      size: 20,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  // 中間地址文字
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(top: 8),
+                                      child: Text(
+                                        addr, 
+                                        style: const TextStyle(color: Color(0xFF5D4037), fontSize: 13, height: 1.5),
+                                      ),
+                                    ),
+                                  ),
+                                  // 🌟 右側專屬：垃圾桶刪除按鈕
+                                  IconButton(
+                                    icon: const Icon(Icons.delete_outline, color: Color(0xFF8B6E60), size: 20),
+                                    onPressed: () {
+                                      setState(() {
+                                        // 1. 從清單中把這個地址拔掉
+                                        method['addresses'].removeAt(addrIndex);
+                                        // 2. 防呆機制：如果刪掉的剛好是正在「選中」的地址，就把選中狀態清空（或自動選第一個）
+                                        if (_selectedAddress == addr) {
+                                          _selectedAddress = method['addresses'].isNotEmpty ? method['addresses'][0] : null;
+                                        }
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }),
+                        // 🌟 新增地址按鈕 (觸發跳轉魔法)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20, bottom: 15, top: 10),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: InkWell(
+                              onTap: () async {
+                                // 跳轉到新增頁面並等待回傳的新地址
+                                final newAddress = await Navigator.push(context, MaterialPageRoute(builder: (context) => const AddAddressScreen()));
+                                if (newAddress != null) {
+                                  setState(() {
+                                    // 把新地址加入該物流的清單，並自動選中它！
+                                    method['addresses'].add(newAddress);
+                                    _selectedAddress = newAddress;
+                                  });
+                                }
+                              },
+                              child: Text(loc.shippingAddAddress, style: const TextStyle(color: Color(0xFF8B6E60))),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   )
-                ]
               ],
             ),
           );
@@ -1324,12 +1480,12 @@ class _ShippingScreenState extends State<ShippingScreen> {
           child: InkWell(
             onTap: () {
               if (_expandedId == null || _selectedAddress == null) {
-                Navigator.pop(context); return;
+                // 🌟 換成字典裡的警告訊息
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(loc.shippingErrSelectMethod)));
+                return;
               }
-              // 找到選中的物流資訊
               final method = shippingMethods.firstWhere((m) => m['id'] == _expandedId);
-              
-              // 打包成 Map 傳回結帳頁面
+              // 打包傳回結帳頁面
               Navigator.pop(context, {
                 'methodId': method['id'],
                 'methodName': method['name'],
@@ -1337,12 +1493,518 @@ class _ShippingScreenState extends State<ShippingScreen> {
                 'address': _selectedAddress,
               });
             },
+            // 🌟 加上「緊箍咒」的巨無霸按鈕
             child: Container(
+              width: double.infinity, // 👈 橫向撐滿
+              height: 54,             // 👈 限制固定高度 54！
               alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(vertical: 15),
+              // padding: const EdgeInsets.symmetric(vertical: 15), <-- 把這行刪掉
               decoration: BoxDecoration(color: const Color(0xFFEABDBA), borderRadius: BorderRadius.circular(30)),
               child: Text(loc.shippingConfirm, style: const TextStyle(fontSize: 18, color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ==========================================
+// 獨立頁面：新增地址頁面 (Add Address Screen)
+// ==========================================
+class AddAddressScreen extends StatefulWidget {
+  const AddAddressScreen({super.key});
+
+  @override
+  State<AddAddressScreen> createState() => _AddAddressScreenState();
+}
+
+class _AddAddressScreenState extends State<AddAddressScreen> {
+  final _nameCtrl = TextEditingController();
+  final _phoneCtrl = TextEditingController();
+  final _zipCtrl = TextEditingController();
+  final _cityCtrl = TextEditingController();
+  final _streetCtrl = TextEditingController();
+  
+  bool _isDefault = false;
+  String _tag = 'work'; // 預設標記為工作
+
+  @override
+  Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
+    return Scaffold(
+      backgroundColor: const Color(0xFFFFF9EE),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_circle_left_outlined, color: Color(0xFF5D4037), size: 30),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(loc.addAddressTitle, style: const TextStyle(color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
+        centerTitle: false,
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(20),
+        children: [
+          Text(loc.addAddressSection, style: const TextStyle(color: Color(0xFF5D4037), fontSize: 16, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 10),
+          _buildTextField(_nameCtrl, loc.addAddressName),
+          _buildTextField(_phoneCtrl, loc.addAddressPhone),
+          _buildTextField(_zipCtrl, loc.addAddressZip),
+          _buildTextField(_cityCtrl, loc.addAddressCity),
+          _buildTextField(_streetCtrl, loc.addAddressStreet),
+          
+          const SizedBox(height: 40),
+          
+          // 設為預設地址 Toggle
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(loc.addAddressDefault, style: const TextStyle(color: Color(0xFF5D4037), fontSize: 16)),
+              InkWell(
+                onTap: () => setState(() => _isDefault = !_isDefault),
+                child: Icon(_isDefault ? Icons.radio_button_checked : Icons.radio_button_unchecked, color: const Color(0xFF5D4037)),
+              )
+            ],
+          ),
+          const SizedBox(height: 20),
+          
+          // 標記為：工作 / 住家
+          Row(
+            children: [
+              Text(loc.addAddressTag, style: const TextStyle(color: Color(0xFF5D4037), fontSize: 16)),
+              const Spacer(),
+              _buildTagRadio(loc.addAddressTagWork, 'work'),
+              const SizedBox(width: 15),
+              _buildTagRadio(loc.addAddressTagHome, 'home'),
+            ],
+          ),
+        ],
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: InkWell(
+            onTap: () {
+              // 簡單檢查是否有填寫
+              if (_nameCtrl.text.isEmpty || _streetCtrl.text.isEmpty) {
+               // 🌟 換成字典裡的警告訊息
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(loc.shippingErrFillAddress)));
+                return;
+              }
+              // 將輸入的資訊排版成你設計圖上的格式
+              String newAddress = '${_nameCtrl.text}\n(+886) ${_phoneCtrl.text}\n${_zipCtrl.text} ${_cityCtrl.text} ${_streetCtrl.text}';
+              Navigator.pop(context, newAddress); // 將新地址回傳給上一頁
+            },
+            // 🌟 加上「緊箍咒」的巨無霸按鈕
+            child: Container(
+              width: double.infinity, // 👈 橫向撐滿
+              height: 54,             // 👈 限制固定高度 54！
+              alignment: Alignment.center,
+              // padding: const EdgeInsets.symmetric(vertical: 15), <-- 把這行刪掉
+              decoration: BoxDecoration(color: const Color(0xFFEABDBA), borderRadius: BorderRadius.circular(30)),
+              child: Text(loc.addAddressSubmit, style: const TextStyle(fontSize: 18, color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(TextEditingController controller, String hint) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: TextField(
+        controller: controller,
+        style: const TextStyle(color: Color(0xFF5D4037)),
+        decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: const TextStyle(color: Colors.grey),
+          enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+          focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Color(0xFF5D4037))),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTagRadio(String label, String value) {
+    return InkWell(
+      onTap: () => setState(() => _tag = value),
+      child: Row(
+        children: [
+          Icon(_tag == value ? Icons.radio_button_checked : Icons.radio_button_unchecked, color: const Color(0xFF5D4037), size: 20),
+          const SizedBox(width: 5),
+          Text(label, style: const TextStyle(color: Color(0xFF5D4037))),
+        ],
+      ),
+    );
+  }
+}
+
+// ==========================================
+// 獨立頁面：付款方式選擇頁面 (Payment Screen)
+// ==========================================
+class PaymentScreen extends StatefulWidget {
+  final Map<String, dynamic>? currentSelection;
+  const PaymentScreen({super.key, this.currentSelection});
+
+  @override
+  State<PaymentScreen> createState() => _PaymentScreenState();
+}
+
+class _PaymentScreenState extends State<PaymentScreen> {
+  String? _selectedMethod; // 'cod' (貨到付款) 或 'card' (信用卡)
+  String? _selectedCard;   // 記錄選中的具體信用卡號
+  late List<String> savedCards;
+
+  @override
+  void initState() {
+    super.initState();
+    // 初始化全域信用卡資料庫
+    if (globalCreditCards == null) {
+      globalCreditCards = []; // 第一次進來是空的
+    }
+    savedCards = globalCreditCards!;
+
+    // 讀取上一頁傳來的預設選項
+    if (widget.currentSelection != null) {
+      _selectedMethod = widget.currentSelection!['methodId'];
+      _selectedCard = widget.currentSelection!['card'];
+    }
+  }
+
+  // 彈出輸入信用卡的對話框
+  void _showAddCardDialog(AppLocalizations loc) {
+    TextEditingController cardCtrl = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFFFFF9EE),
+        title: Text(loc.paymentAddCard, style: const TextStyle(color: Color(0xFF5D4037))),
+        content: TextField(
+          controller: cardCtrl,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            hintText: loc.paymentCardHint,
+            focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(color: Color(0xFF5D4037))),
+          ),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(loc.dialogCancel, style: const TextStyle(color: Colors.grey))),
+          TextButton(
+            onPressed: () {
+              if (cardCtrl.text.trim().isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(loc.paymentErrFillCard)));
+                return;
+              }
+              setState(() {
+                savedCards.add(cardCtrl.text.trim());
+                _selectedCard = cardCtrl.text.trim(); // 自動選中剛新增的卡片
+              });
+              Navigator.pop(ctx);
+            },
+            child: Text(loc.paymentConfirm, style: const TextStyle(color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 封裝卡片 UI 邏輯
+  Widget _buildPaymentOption({
+    required String id,
+    required String title,
+    required bool isExpanded,
+    Widget? expandedContent,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 15),
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: isExpanded ? Border.all(color: const Color(0xFFEABDBA), width: 1.5) : Border.all(color: Colors.transparent),
+      ),
+      child: Column(
+        children: [
+          // 上半部標題 (選中時變黃底)
+          Container(
+            color: isExpanded ? const Color(0xFFFFF3DB) : Colors.transparent,
+            child: ListTile(
+              title: Text(title, style: const TextStyle(color: Color(0xFF5D4037), fontSize: 16)),
+              trailing: isExpanded ? const Icon(Icons.keyboard_arrow_down, color: Color(0xFF5D4037)) : null,
+              onTap: () {
+                setState(() {
+                  _selectedMethod = id;
+                  // 如果切換到別的方式，清空信用卡選擇（如果是切到信用卡，預設選第一張）
+                  if (id == 'card' && savedCards.isNotEmpty && _selectedCard == null) {
+                    _selectedCard = savedCards[0];
+                  }
+                });
+              },
+            ),
+          ),
+          // 下半部延伸區塊 (選中且有設定延伸內容時顯示粉紅底)
+          if (isExpanded && expandedContent != null)
+            Container(
+              color: const Color(0xFFF4DFDD),
+              width: double.infinity,
+              child: expandedContent,
+            ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
+    return Scaffold(
+      backgroundColor: const Color(0xFFFFF9EE),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_circle_left_outlined, color: Color(0xFF5D4037), size: 30),
+          onPressed: () => Navigator.pop(context), // 點擊返回鍵也可以直接退回
+        ),
+        title: Text(loc.paymentTitle, style: const TextStyle(color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
+        centerTitle: false,
+      ),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        children: [
+          // 選項 1：貨到付款
+          _buildPaymentOption(
+            id: 'cod',
+            title: loc.paymentCOD,
+            isExpanded: _selectedMethod == 'cod',
+          ),
+          
+          // 選項 2：信用卡/金融卡
+          _buildPaymentOption(
+            id: 'card',
+            title: loc.paymentCreditCard,
+            isExpanded: _selectedMethod == 'card',
+            expandedContent: Column(
+              children: [
+                const Divider(color: Color(0xFFEABDBA), height: 1, thickness: 1),
+                // 列出已儲存的信用卡
+                ...List.generate(savedCards.length, (index) {
+                  final card = savedCards[index];
+                  return InkWell(
+                    onTap: () => setState(() => _selectedCard = card),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      child: Row(
+                        children: [
+                          Icon(
+                            _selectedCard == card ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+                            color: const Color(0xFF5D4037), size: 20,
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text('**** **** **** ${card.length > 4 ? card.substring(card.length - 4) : card}', 
+                              style: const TextStyle(color: Color(0xFF5D4037), fontSize: 14)),
+                          ),
+                          // 垃圾桶刪除功能
+                          IconButton(
+                            icon: const Icon(Icons.delete_outline, color: Color(0xFF8B6E60), size: 20),
+                            onPressed: () {
+                              setState(() {
+                                savedCards.removeAt(index);
+                                if (_selectedCard == card) _selectedCard = savedCards.isNotEmpty ? savedCards[0] : null;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+                // 新增信用卡按鈕
+                InkWell(
+                  onTap: () => _showAddCardDialog(loc),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(2),
+                          decoration: BoxDecoration(color: Colors.black12, borderRadius: BorderRadius.circular(4)),
+                          child: const Icon(Icons.add, size: 16, color: Color(0xFF5D4037)),
+                        ),
+                        const SizedBox(width: 12),
+                        Text(loc.paymentAddCard, style: const TextStyle(color: Color(0xFF8B6E60), fontSize: 14)),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: InkWell(
+            onTap: () {
+              if (_selectedMethod == null || (_selectedMethod == 'card' && _selectedCard == null)) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(loc.paymentErrSelect)));
+                return;
+              }
+              // 回傳資料：包含方式與卡號（如果是信用卡）
+              Navigator.pop(context, {
+                'methodId': _selectedMethod,
+                'methodName': _selectedMethod == 'cod' ? loc.paymentCOD : loc.paymentCreditCard,
+                'card': _selectedCard,
+              });
+            },
+            child: Container(
+              width: double.infinity,
+              height: 54,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(color: const Color(0xFFEABDBA), borderRadius: BorderRadius.circular(30)),
+              child: Text(loc.paymentConfirm, style: const TextStyle(fontSize: 18, color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ==========================================
+// 獨立頁面：訂單成功頁面 (Order Success Screen)
+// ==========================================
+class OrderSuccessScreen extends StatelessWidget {
+  const OrderSuccessScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
+    return Scaffold(
+      backgroundColor: const Color(0xFFFFF9EE), // 延續溫暖的米色底
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // 大大的粉紅色打勾 Icon
+            const Icon(Icons.check_circle, color: Color(0xFFEABDBA), size: 120),
+            const SizedBox(height: 20),
+            
+            // 成功標題
+            Text(
+              loc.orderSuccessTitle, 
+              style: const TextStyle(fontSize: 28, color: Color(0xFF5D4037), fontWeight: FontWeight.bold)
+            ),
+            const SizedBox(height: 12),
+            
+            // 感謝文字
+            Text(
+              loc.orderSuccessMessage, 
+              textAlign: TextAlign.center, // 🌟 就是加上這行！讓多行文字完美置中
+              style: const TextStyle(fontSize: 16, color: Color(0xFF8B6E60))
+            ),
+            const SizedBox(height: 50),
+            
+            // 回到首頁按鈕
+            InkWell(
+              onTap: () {
+                // 🌟 魔法導航：把前面所有的結帳、購物車頁面都清掉，直接退回最底層的首頁！
+                Navigator.popUntil(context, (route) => route.isFirst);
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF5D4037), // 用深咖啡色讓按鈕更沉穩
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2))],
+                ),
+                child: Text(
+                  loc.orderSuccessBackHome, 
+                  style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 1)
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ==========================================
+// 獨立頁面：條款與規則頁面 (Terms & Conditions Screen)
+// ==========================================
+class TermsScreen extends StatelessWidget {
+  const TermsScreen({super.key});
+
+  // 彈出隱私權政策的對話框
+  void _showPrivacyPolicyDialog(BuildContext context, AppLocalizations loc) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFFFFF9EE),
+        title: Text(loc.privacyPolicyTitle, style: const TextStyle(color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
+        content: SingleChildScrollView( // 讓長篇大論可以滑動
+          child: Text(
+            loc.privacyPolicyContent, // 這裡顯示註冊時的隱私權文字
+            style: const TextStyle(color: Color(0xFF5D4037), height: 1.5),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            // 🌟 把 const 拿掉，並換成呼叫字典 loc.dialogClose
+            child: Text(loc.dialogClose, style: const TextStyle(color: Colors.lightBlue, fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
+
+    return Scaffold(
+      backgroundColor: const Color(0xFFFFF9EE),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_circle_left_outlined, color: Color(0xFF5D4037), size: 30),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(loc.termsPageTitle, style: const TextStyle(color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
+        centerTitle: false,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: RichText(
+          text: TextSpan(
+            style: const TextStyle(fontSize: 16, color: Color(0xFF8B6E60), height: 1.8),
+            children: [
+              TextSpan(text: loc.termsContentP1),
+              // 🌟 淺藍色的隱私權連結
+              TextSpan(
+                text: loc.termsContentLink,
+                style: const TextStyle(
+                  color: Colors.lightBlue, 
+                  fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.underline, // 加上底線更有連結感
+                ),
+                recognizer: TapGestureRecognizer()..onTap = () {
+                  _showPrivacyPolicyDialog(context, loc); // 點擊彈出視窗
+                },
+              ),
+              TextSpan(text: loc.termsContentP2),
+            ],
           ),
         ),
       ),
