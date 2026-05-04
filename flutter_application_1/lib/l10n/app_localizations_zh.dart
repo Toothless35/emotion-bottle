@@ -545,4 +545,63 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get shopItemBuiltInModule => '內建模組';
+
+  @override
+  String get cartSelectAll => '全選';
+
+  @override
+  String get cartCheckout => '去買單';
+
+  @override
+  String get cartAddedSingleMsg => '已加入購物車！';
+
+  @override
+  String get cartAddedComboMsg => '組合包已加入購物車！';
+
+  @override
+  String cartComboItemTitle(
+    String comboName,
+    String largeAnimal,
+    String smallAnimal,
+  ) {
+    return '$comboName\n(大: $largeAnimal, 小: $smallAnimal)';
+  }
+
+  @override
+  String get checkoutRemarks => '備註';
+
+  @override
+  String get checkoutRemarksHint => '管理室代收/電話聯絡時間';
+
+  @override
+  String get checkoutShippingMethod => '寄送方式';
+
+  @override
+  String get checkoutViewAll => '查看全部 〉';
+
+  @override
+  String checkoutItemCount(int count) {
+    return '$count個商品';
+  }
+
+  @override
+  String get checkoutPaymentMethod => '付款方式';
+
+  @override
+  String get checkoutTerms => '結帳完成即視為已同意 條款與規則。';
+
+  @override
+  String get checkoutBtn => '結帳';
+
+  @override
+  String get shippingTitle => '寄送方式';
+
+  @override
+  String get shippingAddAddress => '新增地址 〉';
+
+  @override
+  String get shippingConfirm => '確認';
+
+  @override
+  String get dialogCancel => '取消';
 }

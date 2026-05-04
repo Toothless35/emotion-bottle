@@ -190,5 +190,34 @@
   },
   "shopDropdownHint": "請選擇...",
   "shopSelectSizeWarning": "請先選擇大小款式喔！",
-  "shopItemBuiltInModule": "內建模組"
+  "shopItemBuiltInModule": "內建模組",
+  "cartSelectAll": "全選",
+  "cartCheckout": "去買單",
+  "cartAddedSingleMsg": "已加入購物車！",
+  "cartAddedComboMsg": "組合包已加入購物車！",
+  "cartComboItemTitle": "{comboName}\n(大: {largeAnimal}, 小: {smallAnimal})",
+  "@cartComboItemTitle": {
+    "placeholders": {
+      "comboName": {"type": "String"},
+      "largeAnimal": {"type": "String"},
+      "smallAnimal": {"type": "String"}
+    }
+  },
+  "checkoutRemarks": "備註",
+  "checkoutRemarksHint": "管理室代收/電話聯絡時間",
+  "checkoutShippingMethod": "寄送方式",
+  "checkoutViewAll": "查看全部 〉",
+  "checkoutItemCount": "{count}個商品",
+  "@checkoutItemCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "checkoutPaymentMethod": "付款方式",
+  "checkoutTerms": "結帳完成即視為已同意 條款與規則。",
+  "checkoutBtn": "結帳",
+  "shippingTitle": "寄送方式",
+  "shippingAddAddress": "新增地址 〉",
+  "shippingConfirm": "確認",
+  "dialogCancel": "取消"
 }

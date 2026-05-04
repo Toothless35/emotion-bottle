@@ -571,4 +571,64 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shopItemBuiltInModule => 'Built-in Module';
+
+  @override
+  String get cartSelectAll => 'Select All';
+
+  @override
+  String get cartCheckout => 'Checkout';
+
+  @override
+  String get cartAddedSingleMsg => 'Added to cart!';
+
+  @override
+  String get cartAddedComboMsg => 'Combo added to cart!';
+
+  @override
+  String cartComboItemTitle(
+    String comboName,
+    String largeAnimal,
+    String smallAnimal,
+  ) {
+    return '$comboName\n(L: $largeAnimal, S: $smallAnimal)';
+  }
+
+  @override
+  String get checkoutRemarks => 'Remarks';
+
+  @override
+  String get checkoutRemarksHint => 'Delivery instructions...';
+
+  @override
+  String get checkoutShippingMethod => 'Shipping Method';
+
+  @override
+  String get checkoutViewAll => 'View All >';
+
+  @override
+  String checkoutItemCount(int count) {
+    return '$count Items';
+  }
+
+  @override
+  String get checkoutPaymentMethod => 'Payment Method';
+
+  @override
+  String get checkoutTerms =>
+      'By checking out, you agree to the Terms & Conditions.';
+
+  @override
+  String get checkoutBtn => 'Checkout';
+
+  @override
+  String get shippingTitle => 'Shipping';
+
+  @override
+  String get shippingAddAddress => 'Add Address >';
+
+  @override
+  String get shippingConfirm => 'Confirm';
+
+  @override
+  String get dialogCancel => 'Cancel';
 }

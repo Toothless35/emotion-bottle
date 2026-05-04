@@ -190,5 +190,34 @@
   },
   "shopDropdownHint": "Please select...",
   "shopSelectSizeWarning": "Please select a size first!",
-  "shopItemBuiltInModule": "Built-in Module"
+  "shopItemBuiltInModule": "Built-in Module",
+  "cartSelectAll": "Select All",
+  "cartCheckout": "Checkout",
+  "cartAddedSingleMsg": "Added to cart!",
+  "cartAddedComboMsg": "Combo added to cart!",
+  "cartComboItemTitle": "{comboName}\n(L: {largeAnimal}, S: {smallAnimal})",
+  "@cartComboItemTitle": {
+    "placeholders": {
+      "comboName": {"type": "String"},
+      "largeAnimal": {"type": "String"},
+      "smallAnimal": {"type": "String"}
+    }
+  },
+  "checkoutRemarks": "Remarks",
+  "checkoutRemarksHint": "Delivery instructions...",
+  "checkoutShippingMethod": "Shipping Method",
+  "checkoutViewAll": "View All >",
+  "checkoutItemCount": "{count} Items",
+  "@checkoutItemCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "checkoutPaymentMethod": "Payment Method",
+  "checkoutTerms": "By checking out, you agree to the Terms & Conditions.",
+  "checkoutBtn": "Checkout",
+  "shippingTitle": "Shipping",
+  "shippingAddAddress": "Add Address >",
+  "shippingConfirm": "Confirm",
+  "dialogCancel": "Cancel"
 }

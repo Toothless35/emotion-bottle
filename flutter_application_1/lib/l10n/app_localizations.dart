@@ -1153,6 +1153,112 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'內建模組'**
   String get shopItemBuiltInModule;
+
+  /// No description provided for @cartSelectAll.
+  ///
+  /// In zh, this message translates to:
+  /// **'全選'**
+  String get cartSelectAll;
+
+  /// No description provided for @cartCheckout.
+  ///
+  /// In zh, this message translates to:
+  /// **'去買單'**
+  String get cartCheckout;
+
+  /// No description provided for @cartAddedSingleMsg.
+  ///
+  /// In zh, this message translates to:
+  /// **'已加入購物車！'**
+  String get cartAddedSingleMsg;
+
+  /// No description provided for @cartAddedComboMsg.
+  ///
+  /// In zh, this message translates to:
+  /// **'組合包已加入購物車！'**
+  String get cartAddedComboMsg;
+
+  /// No description provided for @cartComboItemTitle.
+  ///
+  /// In zh, this message translates to:
+  /// **'{comboName}\n(大: {largeAnimal}, 小: {smallAnimal})'**
+  String cartComboItemTitle(
+    String comboName,
+    String largeAnimal,
+    String smallAnimal,
+  );
+
+  /// No description provided for @checkoutRemarks.
+  ///
+  /// In zh, this message translates to:
+  /// **'備註'**
+  String get checkoutRemarks;
+
+  /// No description provided for @checkoutRemarksHint.
+  ///
+  /// In zh, this message translates to:
+  /// **'管理室代收/電話聯絡時間'**
+  String get checkoutRemarksHint;
+
+  /// No description provided for @checkoutShippingMethod.
+  ///
+  /// In zh, this message translates to:
+  /// **'寄送方式'**
+  String get checkoutShippingMethod;
+
+  /// No description provided for @checkoutViewAll.
+  ///
+  /// In zh, this message translates to:
+  /// **'查看全部 〉'**
+  String get checkoutViewAll;
+
+  /// No description provided for @checkoutItemCount.
+  ///
+  /// In zh, this message translates to:
+  /// **'{count}個商品'**
+  String checkoutItemCount(int count);
+
+  /// No description provided for @checkoutPaymentMethod.
+  ///
+  /// In zh, this message translates to:
+  /// **'付款方式'**
+  String get checkoutPaymentMethod;
+
+  /// No description provided for @checkoutTerms.
+  ///
+  /// In zh, this message translates to:
+  /// **'結帳完成即視為已同意 條款與規則。'**
+  String get checkoutTerms;
+
+  /// No description provided for @checkoutBtn.
+  ///
+  /// In zh, this message translates to:
+  /// **'結帳'**
+  String get checkoutBtn;
+
+  /// No description provided for @shippingTitle.
+  ///
+  /// In zh, this message translates to:
+  /// **'寄送方式'**
+  String get shippingTitle;
+
+  /// No description provided for @shippingAddAddress.
+  ///
+  /// In zh, this message translates to:
+  /// **'新增地址 〉'**
+  String get shippingAddAddress;
+
+  /// No description provided for @shippingConfirm.
+  ///
+  /// In zh, this message translates to:
+  /// **'確認'**
+  String get shippingConfirm;
+
+  /// No description provided for @dialogCancel.
+  ///
+  /// In zh, this message translates to:
+  /// **'取消'**
+  String get dialogCancel;
 }
 
 class _AppLocalizationsDelegate
