@@ -1475,6 +1475,132 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'關閉'**
   String get dialogClose;
+
+  /// No description provided for @profileChangeAvatar.
+  ///
+  /// In zh, this message translates to:
+  /// **'更換頭像'**
+  String get profileChangeAvatar;
+
+  /// No description provided for @profileExploreMind.
+  ///
+  /// In zh, this message translates to:
+  /// **'心靈探索'**
+  String get profileExploreMind;
+
+  /// No description provided for @profilePreferences.
+  ///
+  /// In zh, this message translates to:
+  /// **'偏好'**
+  String get profilePreferences;
+
+  /// No description provided for @profileDeviceLight.
+  ///
+  /// In zh, this message translates to:
+  /// **'裝置燈光功能'**
+  String get profileDeviceLight;
+
+  /// No description provided for @profileDeviceSound.
+  ///
+  /// In zh, this message translates to:
+  /// **'裝置音效功能'**
+  String get profileDeviceSound;
+
+  /// No description provided for @profileSysNotif.
+  ///
+  /// In zh, this message translates to:
+  /// **'系統通知'**
+  String get profileSysNotif;
+
+  /// No description provided for @profilePersonalInfo.
+  ///
+  /// In zh, this message translates to:
+  /// **'個人資料'**
+  String get profilePersonalInfo;
+
+  /// No description provided for @profileName.
+  ///
+  /// In zh, this message translates to:
+  /// **'姓名'**
+  String get profileName;
+
+  /// No description provided for @profileUsername.
+  ///
+  /// In zh, this message translates to:
+  /// **'使用者名稱'**
+  String get profileUsername;
+
+  /// No description provided for @profilePassword.
+  ///
+  /// In zh, this message translates to:
+  /// **'密碼'**
+  String get profilePassword;
+
+  /// No description provided for @profileEmail.
+  ///
+  /// In zh, this message translates to:
+  /// **'電子信箱'**
+  String get profileEmail;
+
+  /// No description provided for @profileDeleteAccount.
+  ///
+  /// In zh, this message translates to:
+  /// **'刪除帳號'**
+  String get profileDeleteAccount;
+
+  /// No description provided for @profileLogout.
+  ///
+  /// In zh, this message translates to:
+  /// **'登出'**
+  String get profileLogout;
+
+  /// No description provided for @profileTerms.
+  ///
+  /// In zh, this message translates to:
+  /// **'使用條款'**
+  String get profileTerms;
+
+  /// No description provided for @profilePrivacy.
+  ///
+  /// In zh, this message translates to:
+  /// **'隱私政策'**
+  String get profilePrivacy;
+
+  /// No description provided for @deleteConfirmTitle.
+  ///
+  /// In zh, this message translates to:
+  /// **'確認刪除帳號'**
+  String get deleteConfirmTitle;
+
+  /// No description provided for @deleteConfirmMsg.
+  ///
+  /// In zh, this message translates to:
+  /// **'您確定要刪除帳號嗎？此動作無法復原。'**
+  String get deleteConfirmMsg;
+
+  /// No description provided for @deleteConfirmBtn.
+  ///
+  /// In zh, this message translates to:
+  /// **'刪除'**
+  String get deleteConfirmBtn;
+
+  /// No description provided for @logoutConfirmTitle.
+  ///
+  /// In zh, this message translates to:
+  /// **'確認登出'**
+  String get logoutConfirmTitle;
+
+  /// No description provided for @logoutConfirmMsg.
+  ///
+  /// In zh, this message translates to:
+  /// **'您確定要登出嗎？'**
+  String get logoutConfirmMsg;
+
+  /// No description provided for @logoutConfirmBtn.
+  ///
+  /// In zh, this message translates to:
+  /// **'登出'**
+  String get logoutConfirmBtn;
 }
 
 class _AppLocalizationsDelegate

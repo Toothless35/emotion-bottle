@@ -2,7 +2,20 @@ import 'nickname_screen.dart';
 import 'package:flutter/material.dart';
 import 'l10n/app_localizations.dart';
 class VerificationScreen extends StatefulWidget {
-  const VerificationScreen({super.key});
+  // 1. 定義要接收的資料變數
+  final String name;
+  final String username;
+  final String password;
+  final String email;
+
+  // 2. 修改建構子，讓它一定要接收這些資料
+  const VerificationScreen({
+    super.key,
+    required this.name,
+    required this.username,
+    required this.password,
+    required this.email,
+  });
 
   @override
   State<VerificationScreen> createState() => _VerificationScreenState();
@@ -11,6 +24,7 @@ class VerificationScreen extends StatefulWidget {
 class _VerificationScreenState extends State<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: const Color(0xFFFAF8F5),
       extendBodyBehindAppBar: true,
@@ -86,27 +100,39 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {
-                    // 點擊確認後，跳轉到暱稱設定頁面！
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const NicknameScreen()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 254, 210, 107),
-                    foregroundColor: const Color(0xFF5D4037),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10), // 你設計圖上的確認按鈕圓角比較小，這裡設定為10
-                      side: const BorderSide(color: Color(0xFF5D4037), width: 1.5),
+                onPressed: () {
+                  // 帶著這頁輸入框的資料，跳轉到暱稱設定頁面！
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NicknameScreen(
+                        // 🌟 因為這頁是中繼站，所以我們用 widget. 把上一頁傳來的資料繼續往下傳！
+                        name: widget.name,       
+                        password: widget.password, 
+                        email: widget.email, 
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    AppLocalizations.of(context)!.confirmBtn,
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 2),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 254, 210, 107),
+                  foregroundColor: const Color(0xFF5D4037),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // 圓角設定為 10
+                    side: const BorderSide(color: Color(0xFF5D4037), width: 1.5),
                   ),
                 ),
+                // 🌟 這裡完美套用你字典裡已經註冊的 "paymentConfirm" (確認)
+                child: Text(
+                  loc.paymentConfirm, 
+                  style: const TextStyle(
+                    fontSize: 18, 
+                    fontWeight: FontWeight.bold, 
+                    letterSpacing: 2
+                  ),
+                ),
+              ), // ElevatedButton
               ),
             ),
             const SizedBox(height: 80),

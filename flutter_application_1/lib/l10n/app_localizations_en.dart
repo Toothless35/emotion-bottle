@@ -747,4 +747,68 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dialogClose => 'Close';
+
+  @override
+  String get profileChangeAvatar => 'Change Avatar';
+
+  @override
+  String get profileExploreMind => 'Explore Mind';
+
+  @override
+  String get profilePreferences => 'Preferences';
+
+  @override
+  String get profileDeviceLight => 'Device Light Function';
+
+  @override
+  String get profileDeviceSound => 'Device Sound Function';
+
+  @override
+  String get profileSysNotif => 'System Notifications';
+
+  @override
+  String get profilePersonalInfo => 'Profile Info';
+
+  @override
+  String get profileName => 'Name';
+
+  @override
+  String get profileUsername => 'Username';
+
+  @override
+  String get profilePassword => 'Password';
+
+  @override
+  String get profileEmail => 'Email';
+
+  @override
+  String get profileDeleteAccount => 'Delete Account';
+
+  @override
+  String get profileLogout => 'Logout';
+
+  @override
+  String get profileTerms => 'Terms of Use';
+
+  @override
+  String get profilePrivacy => 'Privacy Policy';
+
+  @override
+  String get deleteConfirmTitle => 'Delete Account';
+
+  @override
+  String get deleteConfirmMsg =>
+      'Are you sure you want to delete your account? This action cannot be undone.';
+
+  @override
+  String get deleteConfirmBtn => 'Delete';
+
+  @override
+  String get logoutConfirmTitle => 'Logout';
+
+  @override
+  String get logoutConfirmMsg => 'Are you sure you want to log out?';
+
+  @override
+  String get logoutConfirmBtn => 'Logout';
 }

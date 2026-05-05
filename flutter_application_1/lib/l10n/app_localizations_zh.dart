@@ -715,4 +715,67 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get dialogClose => '關閉';
+
+  @override
+  String get profileChangeAvatar => '更換頭像';
+
+  @override
+  String get profileExploreMind => '心靈探索';
+
+  @override
+  String get profilePreferences => '偏好';
+
+  @override
+  String get profileDeviceLight => '裝置燈光功能';
+
+  @override
+  String get profileDeviceSound => '裝置音效功能';
+
+  @override
+  String get profileSysNotif => '系統通知';
+
+  @override
+  String get profilePersonalInfo => '個人資料';
+
+  @override
+  String get profileName => '姓名';
+
+  @override
+  String get profileUsername => '使用者名稱';
+
+  @override
+  String get profilePassword => '密碼';
+
+  @override
+  String get profileEmail => '電子信箱';
+
+  @override
+  String get profileDeleteAccount => '刪除帳號';
+
+  @override
+  String get profileLogout => '登出';
+
+  @override
+  String get profileTerms => '使用條款';
+
+  @override
+  String get profilePrivacy => '隱私政策';
+
+  @override
+  String get deleteConfirmTitle => '確認刪除帳號';
+
+  @override
+  String get deleteConfirmMsg => '您確定要刪除帳號嗎？此動作無法復原。';
+
+  @override
+  String get deleteConfirmBtn => '刪除';
+
+  @override
+  String get logoutConfirmTitle => '確認登出';
+
+  @override
+  String get logoutConfirmMsg => '您確定要登出嗎？';
+
+  @override
+  String get logoutConfirmBtn => '登出';
 }

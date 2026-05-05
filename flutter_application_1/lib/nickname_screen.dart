@@ -3,7 +3,18 @@ import 'package:flutter/material.dart';
 import 'l10n/app_localizations.dart';
 
 class NicknameScreen extends StatefulWidget {
-  const NicknameScreen({super.key});
+  // 🌟 1. 宣告要接收的三個變數
+  final String name;
+  final String password;
+  final String email;
+
+  // 🌟 2. 修改建構子，要求跳轉過來時一定要給這三個資料
+  const NicknameScreen({
+    super.key,
+    required this.name,
+    required this.password,
+    required this.email,
+  });
 
   @override
   State<NicknameScreen> createState() => _NicknameScreenState();

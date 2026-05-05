@@ -35,7 +35,7 @@ class ResultScreen extends StatelessWidget {
     } else if (score <= 9) {
       return GuardianAnimal(
         name: loc.guardianPenguinName,
-        imagePath: "assets/penquin.png",
+        imagePath: "assets/penguin.png",
         description1: loc.guardianPenguinDesc1,
         description2: loc.guardianPenguinDesc2,
       );
@@ -49,7 +49,7 @@ class ResultScreen extends StatelessWidget {
     } else {
       return GuardianAnimal(
         name: loc.guardianHedgehogName,
-        imagePath: "assets/hedgedog.png",
+        imagePath: "assets/hedgehog.png",
         description1: loc.guardianHedgehogDesc1,
         description2: loc.guardianHedgehogDesc2,
       );

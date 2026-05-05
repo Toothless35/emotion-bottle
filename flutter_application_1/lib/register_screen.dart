@@ -14,8 +14,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
 
+  // 🌟 在這裡新增這四個負責抓取註冊文字的控制器
+  final TextEditingController _nameCtrl = TextEditingController();
+  final TextEditingController _usernameCtrl = TextEditingController();
+  final TextEditingController _pwdCtrl = TextEditingController();
+  final TextEditingController _emailCtrl = TextEditingController();
+
+  @override
+  void dispose() {
+    // 記得釋放記憶體
+    _nameCtrl.dispose();
+    _usernameCtrl.dispose();
+    _pwdCtrl.dispose();
+    _emailCtrl.dispose();
+    super.dispose();
+    } // 🌟 就是少沾了這個右括號！！把它補上去！
+
   @override
   Widget build(BuildContext context) {
+    // 🌟 新增這一行：把翻譯小幫手設定為 loc
+    final loc = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: const Color(0xFFFAF8F5),
       // 👇 這個超神奇！它能讓原本的 AppBar 變成透明圖層，波浪就可以畫到手機最頂部！
@@ -66,13 +84,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   // 電子信箱
                   Text(AppLocalizations.of(context)!.email, style: TextStyle(fontSize: 16, color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-                  _buildTextField('Email', fieldType: 'email'),
+                  _buildTextField(loc.profileEmail, fieldType: 'email'),
                   const SizedBox(height: 24),
 
                   // 使用者名稱
                   Text(AppLocalizations.of(context)!.usersname, style: TextStyle(fontSize: 16, color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-                  _buildTextField('Name', fieldType: 'name'),
+                  _buildTextField(loc.profileName, fieldType: 'name'),
                   const SizedBox(height: 24),
 
                   // ================= 【密碼與確認密碼並排區塊】 =================
@@ -85,7 +103,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           children: [
                             Text(AppLocalizations.of(context)!.fgtpassword, style: TextStyle(fontSize: 16, color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
                             const SizedBox(height: 8),
-                            _buildTextField('Password', fieldType: 'password'),
+                            _buildTextField(loc.profilePassword, fieldType: 'password'),
                           ],
                         ),
                       ),
@@ -98,7 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           children: [
                             Text(AppLocalizations.of(context)!.cfmpassword, style: TextStyle(fontSize: 16, color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
                             const SizedBox(height: 8),
-                            _buildTextField('Password', fieldType: 'confirm'),
+                            _buildTextField(loc.profilePassword, fieldType: 'confirm'),
                           ],
                         ),
                       ),
@@ -112,10 +130,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {
-                        // 點擊註冊後，跳轉到驗證碼頁面
+                        // 點擊註冊後，把輸入框的資料「傳給」驗證碼頁面
                         Navigator.push(
-                           context,
-                          MaterialPageRoute(builder: (context) => const VerificationScreen()),
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VerificationScreen(
+                              name: _nameCtrl.text,         // 這裡請對應你註冊頁的 Controller 名稱
+                              username: _usernameCtrl.text,
+                              password: _pwdCtrl.text,
+                              email: _emailCtrl.text,
+                            ),
+                          ),
                         );
                       },
                       style: ElevatedButton.styleFrom(
