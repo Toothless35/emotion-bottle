@@ -5,10 +5,20 @@ import 'package:flutter/material.dart';
 import 'l10n/app_localizations.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  // 👇 這裡準備接收從上一頁傳過來的暱稱！
-  final String nickname;
+  // 🌟 1. 宣告要從上一頁（暱稱頁）接過來的四個變數
+  final String name;
+  final String username;
+  final String password;
+  final String email;
 
-  const WelcomeScreen({super.key, required this.nickname});
+  // 🌟 2. 修改建構子，要求跳轉過來時必須帶上這四個資料
+  const WelcomeScreen({
+    super.key,
+    required this.name,
+    required this.username,
+    required this.password,
+    required this.email,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +82,7 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   Text(
                     // 如果使用者沒輸入暱稱就按下一步，預設給他一個驚嘆號
-                    nickname.isEmpty ? '!' : '$nickname!',
+                    username.isEmpty ? '!' : '$username!',
                     style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Color(0xFF5D4037)),
                   ),
                   const SizedBox(height: 50),
@@ -100,8 +110,16 @@ class WelcomeScreen extends StatelessWidget {
                         // 點擊後進入測驗前導頁面！
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const QuizIntroScreen()),
-                        );
+                          MaterialPageRoute(
+                            builder: (context) => QuizIntroScreen( // 把前面的 const 拿掉！
+                            // 🌟 3. 把這頁接到的資料，繼續丟給問卷前導頁
+                            name: name,           // 注意：這裡不用寫 widget.name 喔！
+                            username: username,
+                            password: password,
+                            email: email,
+                            ), // 結束 QuizIntroScreen
+                          ), // 🌟 結束 MaterialPageRoute (注意！這裡是逗號，不能是分號)
+                        ); // 🌟 結束 Navigator.push (這裡才是分號！)
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor:  const Color.fromARGB(255, 254, 210, 107),

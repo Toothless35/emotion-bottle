@@ -19,9 +19,24 @@ class GuardianAnimal {
 }
 
 class ResultScreen extends StatelessWidget {
+  // 🌟 1. 測驗結果需要的「分數」保留著
   final int score;
 
-  const ResultScreen({super.key, required this.score});
+  // 🌟 2. 加上大隊接力需要的「四個個人資料」
+  final String name;
+  final String username;
+  final String password;
+  final String email;
+
+  // 🌟 3. 在建構子裡，把它們全部設定為必填 (required)
+  const ResultScreen({
+    super.key,
+    required this.score,
+    required this.name,
+    required this.username,
+    required this.password,
+    required this.email,
+  });
 
   // 🌟 2. 讓這個函數接收 loc (字典) 作為參數
   GuardianAnimal _getGuardian(AppLocalizations loc) {
@@ -156,12 +171,20 @@ class ResultScreen extends StatelessWidget {
                           // TODO: 未來這裡可以加上向系統要求開啟通知的程式碼
                           
                           // 🌟 跳轉到首頁並清空歷史紀錄
+                          // 🌟 跳轉到首頁並清空歷史紀錄
                           Navigator.pushAndRemoveUntil(
                             context,
-                            MaterialPageRoute(builder: (context) => const HomeScreen()), // 替換成你的首頁 Class
-                            (route) => false, // false 代表清空所有先前的頁面
-                          );
-                        },
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreen( // 🌟 把 const 拿掉
+                                name: name,             // 🌟 1. 把 widget. 拿掉！
+                                username: username,
+                                password: password,
+                                email: email,
+                              ), // 結束 HomeScreen
+                            ), // 🌟 2. 結束 MaterialPageRoute (注意這裡是逗號！)
+                            (route) => false, // 🌟 3. 補上清除歷史紀錄的條件
+                          ); // 🌟 4. 真正結束 Navigator.pushAndRemoveUntil (這裡才是分號)
+                        }, // 結束 onPressed 的大括號
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color.fromARGB(255, 254, 210, 107), 
                           shape: RoundedRectangleBorder(
@@ -186,8 +209,15 @@ class ResultScreen extends StatelessWidget {
                       // 🌟 直接跳轉到首頁並清空歷史紀錄
                       Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => const HomeScreen()), // 替換成你的首頁 Class
-                        (route) => false,
+                  MaterialPageRoute(
+                    builder: (context) => HomeScreen( 
+                      name: name,             // 🌟 終於可以把行李卸下來交給首頁了！
+                      username: username,
+                      password: password,
+                      email: email,
+                    ),
+                  ),
+                  (route) => false,
                       );
                     },
                     child: Text(

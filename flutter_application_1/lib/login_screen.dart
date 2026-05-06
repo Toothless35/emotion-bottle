@@ -83,10 +83,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         // 🌟 登入成功後，跳轉到首頁並清空歷史紀錄
                         Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (context) => const HomeScreen()), // 替換成你的首頁 Class
-                          (route) => false,
-                        );
-                      },
+                          MaterialPageRoute(
+                            builder: (context) => HomeScreen( // 🌟 把 const 拿掉，並帶上測試資料
+                            name: '無虞',       // 這裡先放假資料，讓畫面能順利跳轉
+                            username: '我要吃辣條',
+                            password: '123456789',              // 如果這頁有密碼控制器，也可以放 _pwdCtrl.text
+                            email: '520@gmail.com',                 // 如果這頁有信箱控制器，也可以放 _emailCtrl.text
+                          ),
+                        ), // 結束 MaterialPageRoute
+                          (route) => false, // 🌟 補回這行：告訴電腦清除前面的所有頁面
+                        ); // 🌟 補回這行：結束 Navigator.pushAndRemoveUntil 的呼叫
+                      }, // 結束 onPressed 的大括號
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 254, 210, 107), // Figma上的黃色
                         foregroundColor: const Color(0xFF5D4037),

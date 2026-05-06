@@ -1,3 +1,6 @@
+import 'package:flutter_application_1/quiz_intro_screen.dart';
+
+import 'profile_screen.dart'; // 確保檔案名稱與你實際的一致喔！
 import 'welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'l10n/app_localizations.dart';
@@ -125,15 +128,18 @@ class _NicknameScreenState extends State<NicknameScreen> {
                     height: 54,
                     child: ElevatedButton(
                       onPressed: () {
-                        // 抓取剛剛綁定遙控器的文字，傳遞給 WelcomeScreen！
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WelcomeScreen(
-                              nickname: _nicknameController.text, // 將打好的字當作禮物包裝過去
-                            ),
+                        Navigator.pushAndRemoveUntil( // 註冊完通常會清空前面的歷史紀錄
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => WelcomeScreen( // 🌟 記得！下一頁是去 WelcomeScreen
+                            name: widget.name,                
+                            username: _nicknameController.text, // 帶著剛出爐的暱稱
+                            password: widget.password,        
+                            email: widget.email,              
                           ),
-                        );
+                        ),
+                        (route) => false,
+                      );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 254, 210, 107),

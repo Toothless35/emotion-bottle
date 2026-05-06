@@ -3,7 +3,20 @@ import 'package:flutter/material.dart';
 import 'l10n/app_localizations.dart';
 
 class QuizIntroScreen extends StatelessWidget {
-  const QuizIntroScreen({super.key});
+  // 🌟 1. 宣告要從上一頁（暱稱頁）接過來的四個變數
+  final String name;
+  final String username;
+  final String password;
+  final String email;
+
+  // 🌟 2. 修改建構子，要求跳轉過來時一定要帶上這四個資料
+  const QuizIntroScreen({
+    super.key,
+    required this.name,
+    required this.username,
+    required this.password,
+    required this.email,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +122,14 @@ class QuizIntroScreen extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const QuizPagerScreen(),
+                              // 🌟 1. 記得把 const 拿掉！
+                              builder: (context) => QuizPagerScreen( 
+                                // 🌟 2. 把手上的資料交給下一棒的問卷頁！
+                                name: name,             
+                                username: username,
+                                password: password,
+                                email: email,
+                              ),
                             ),
                           );
                         },

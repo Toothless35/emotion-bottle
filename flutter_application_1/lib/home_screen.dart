@@ -10,7 +10,20 @@ import 'shop_screen.dart';
 import 'profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  // 🌟 1. 宣告這頁需要接收這四個變數
+  final String name;
+  final String username;
+  final String password;
+  final String email;
+
+  // 🌟 2. 修改建構子接收資料
+  const HomeScreen({
+    super.key,
+    required this.name,
+    required this.username,
+    required this.password,
+    required this.email,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -29,8 +42,15 @@ class _HomeScreenState extends State<HomeScreen> {
       const HomeContent(), // 首頁內容 (我們把它獨立寫在檔案最下方)
       const DataScreen(),  // 數據頁
       const ShopScreen(), // 商城頁
-      const ProfileScreen(),// 個人頁
-    ];
+      // ... 前面可能是你的 Home, Data 頁面
+      // 👇 確保第 4 個真的是 ProfileScreen！
+      ProfileScreen(             
+        name: widget.name,
+        username: widget.username,
+        password: widget.password,
+        email: widget.email,
+      ),
+    ]; // 這是你第 33 行的結尾
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFF9EE),

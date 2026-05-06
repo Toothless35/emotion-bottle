@@ -10,7 +10,20 @@ class QuizPageData {
 }
 
 class QuizPagerScreen extends StatefulWidget {
-  const QuizPagerScreen({super.key});
+  // 🌟 1. 宣告要從上一頁接過來的四個變數
+  final String name;
+  final String username;
+  final String password;
+  final String email;
+
+  // 🌟 2. 規定跳轉過來時一定要帶上這四個資料
+  const QuizPagerScreen({
+    super.key,
+    required this.name,
+    required this.username,
+    required this.password,
+    required this.email,
+  });
 
   @override
   State<QuizPagerScreen> createState() => _QuizPagerScreenState();
@@ -69,11 +82,18 @@ class _QuizPagerScreenState extends State<QuizPagerScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => ResultScreen(score: totalScore),
-        ),
-      );
-    }
-  }
+          builder: (context) => ResultScreen( 
+            score: totalScore,         // 保留原本算好的分數
+            // 🌟 把手上接到的個人資料一起傳給下一棒（因為這頁是 Stateful，所以要加 widget.）
+            name: widget.name,             
+            username: widget.username,
+            password: widget.password,
+            email: widget.email,
+          ), // 結束 ResultScreen
+          ), // 結束 MaterialPageRoute
+        ); // 🌟 真正結束 Navigator.pushReplacement (這裡只要用 ); 就好！)
+      } // 🌟 結束 else 區塊的大括號
+    } // 🌟 結束 _submitQuiz 函數的大括號
 
   @override
   Widget build(BuildContext context) {

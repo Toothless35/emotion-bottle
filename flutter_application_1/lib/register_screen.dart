@@ -19,6 +19,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _usernameCtrl = TextEditingController();
   final TextEditingController _pwdCtrl = TextEditingController();
   final TextEditingController _emailCtrl = TextEditingController();
+  // 🌟 補上這行：建立「確認密碼」專用的盒子
+  final TextEditingController _confirmPwdCtrl = TextEditingController();
 
   @override
   void dispose() {
@@ -27,6 +29,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _usernameCtrl.dispose();
     _pwdCtrl.dispose();
     _emailCtrl.dispose();
+    // 🌟 補上這行：離開頁面時把盒子銷毀
+    _confirmPwdCtrl.dispose(); 
     super.dispose();
     } // 🌟 就是少沾了這個右括號！！把它補上去！
 
@@ -84,13 +88,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   // 電子信箱
                   Text(AppLocalizations.of(context)!.email, style: TextStyle(fontSize: 16, color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-                  _buildTextField(loc.profileEmail, fieldType: 'email'),
+                  _buildTextField(loc.profileEmail, fieldType: 'email', controller: _emailCtrl),
                   const SizedBox(height: 24),
 
                   // 使用者名稱
                   Text(AppLocalizations.of(context)!.usersname, style: TextStyle(fontSize: 16, color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
                   const SizedBox(height: 8),
-                  _buildTextField(loc.profileName, fieldType: 'name'),
+                  _buildTextField(loc.profileName, fieldType: 'name', controller: _nameCtrl),
                   const SizedBox(height: 24),
 
                   // ================= 【密碼與確認密碼並排區塊】 =================
@@ -103,7 +107,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           children: [
                             Text(AppLocalizations.of(context)!.fgtpassword, style: TextStyle(fontSize: 16, color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
                             const SizedBox(height: 8),
-                            _buildTextField(loc.profilePassword, fieldType: 'password'),
+                           _buildTextField(loc.profilePassword, fieldType: 'password', controller: _pwdCtrl),
                           ],
                         ),
                       ),
@@ -116,7 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           children: [
                             Text(AppLocalizations.of(context)!.cfmpassword, style: TextStyle(fontSize: 16, color: Color(0xFF5D4037), fontWeight: FontWeight.bold)),
                             const SizedBox(height: 8),
-                            _buildTextField(loc.profilePassword, fieldType: 'confirm'),
+                            _buildTextField(loc.profilePassword, fieldType: 'confirm', controller: _confirmPwdCtrl),
                           ],
                         ),
                       ),
@@ -184,7 +188,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   // ================= 【多功能的輸入框生成器】 =================
-  Widget _buildTextField(String hint, {required String fieldType}) {
+  // 🌟 1. 在括號裡加上 required TextEditingController controller，要求呼叫時一定要給盒子
+  Widget _buildTextField(String hint, {required String fieldType, required TextEditingController controller}) {
     // 判斷當前這個輸入框是否需要隱藏文字
     bool isObscure = false;
     if (fieldType == 'password') {
@@ -194,6 +199,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
 
     return TextField(
+      controller: controller, // 🌟 2. 這裡最重要！把收到的盒子裝到 TextField 上
       obscureText: isObscure,
       decoration: InputDecoration(
         hintText: hint,

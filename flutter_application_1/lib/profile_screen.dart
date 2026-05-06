@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart'; // 🌟 為了使用漂亮的 Cupertino
 import 'l10n/app_localizations.dart'; // 記得改成你的字典路徑
 // import 'quiz_intro_screen.dart'; // 匯入你的問卷頁面
 import 'login_screen.dart';      // 匯入你的登入頁面
+import 'quiz_intro_screen.dart';
 import 'register_screen.dart';   // 匯入你的註冊頁面
 
 class ProfileScreen extends StatefulWidget {
@@ -320,8 +321,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       right: 0, top: 90,
                       child: InkWell(
                         onTap: () {
-                          // 跳轉回心靈問卷頁面
-                          // Navigator.push(context, MaterialPageRoute(builder: (context) => const QuizIntroScreen()));
+                          // 點擊後跳轉回問卷前導頁，並把現有的資料帶過去
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => QuizIntroScreen(
+                                name: widget.name,
+                                username: widget.username,
+                                password: widget.password,
+                                email: widget.email,
+                              ),
+                            ),
+                          );
                         },
                         child: Text(loc.profileExploreMind, style: const TextStyle(color: Color(0xFFA0C4E2), fontSize: 13)),
                       ),
@@ -383,41 +394,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
 
               // ================= 【底部：登出與條款連結】 =================
+              // ================= 【底部：登出與條款連結】 =================
               const SizedBox(height: 20),
-              Center(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFFF9EE), 
-                    foregroundColor: const Color(0xFF5D4037),
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                      side: const BorderSide(color: Color(0xFFEABDBA), width: 1.5), // 粉紅邊框
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                  ),
-                  onPressed: () => _showLogoutDialog(loc), 
-                    // 點擊後回到登入頁面
-                    // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
-              
-                  child: Text(loc.profileLogout, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                ),
-              ),
-              const SizedBox(height: 30),
-              
-              // 條款連結
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end, // 讓左右兩邊的底部對齊
                 children: [
-                  InkWell(
-                    onTap: () { /* TODO: 顯示使用條款 Dialog */ },
-                    child: Text(loc.profileTerms, style: const TextStyle(color: Color(0xFFA0C4E2), fontSize: 14)),
+                  // 🌟 左邊區塊：條款與政策 (用 Expanded 佔據左邊剩餘空間)
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start, // 文字靠左對齊
+                      children: [
+                        InkWell(
+                          onTap: () { /* TODO: 顯示使用條款 */ },
+                          child: Text(loc.profileTerms, style: const TextStyle(color: Color(0xFFA0C4E2), fontSize: 13)),
+                        ),
+                        const SizedBox(height: 8),
+                        InkWell(
+                          onTap: () { /* TODO: 顯示隱私政策 */ },
+                          child: const Text('隱私政策', style: TextStyle(color: Color(0xFFA0C4E2), fontSize: 13)), // 記得換成你的 loc 變數
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 8),
-                  InkWell(
-                    onTap: () { /* TODO: 顯示隱私政策 Dialog (可呼叫你上一回合寫好的那個 _showPrivacyPolicyDialog) */ },
-                    child: Text(loc.profilePrivacy, style: const TextStyle(color: Color(0xFFA0C4E2), fontSize: 14)),
+
+                  // 🌟 中間區塊：登出按鈕
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFFFF9EE),
+                      foregroundColor: const Color(0xFF5D4037),
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        side: const BorderSide(color: Color(0xFFEABDBA), width: 1.5),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    ),
+                    onPressed: () => _showLogoutDialog(loc),
+                    child: Text(loc.profileLogout, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   ),
+
+                  // 🌟 右邊區塊：放一個空的 Expanded，它的作用是把中間的登出按鈕完美「擠」到正中間！
+                  const Expanded(child: SizedBox()), 
                 ],
               ),
               const SizedBox(height: 40), // 底部留白避免被導航欄遮住
