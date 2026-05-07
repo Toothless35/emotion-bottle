@@ -811,4 +811,38 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logoutConfirmBtn => 'Logout';
+
+  @override
+  String get dataWeek => 'Week';
+
+  @override
+  String get dataMonth => 'Month';
+
+  @override
+  String get dataYear => 'Year';
+
+  @override
+  String get dataMoreInfo => 'More Info';
+
+  @override
+  String get dataAboutHeartRate => 'About Heart Rate';
+
+  @override
+  String get dataAboutSleep => 'About Sleep';
+
+  @override
+  String get dataHeartRateDesc =>
+      'The heart beats approximately 100,000 times a day. Heart rate speeds up and slows down during rest and activity. Heart rate is the number of heartbeats per minute and can be used to monitor cardiovascular health.';
+
+  @override
+  String get dataSleepDesc =>
+      'Adults typically need about 7-9 hours of sleep. The body regulates energy, repairs tissues, and organizes memories during stages like light sleep, deep sleep, and REM. Sleep duration and quality reflect physical and mental well-being.';
+
+  @override
+  String get msgHrWarning =>
+      'Slightly elevated heart rate detected. Consider starting ECHO to relax.';
+
+  @override
+  String get msgHrAlert =>
+      'Abnormally high heart rate detected. ECHO soothing mode has auto-started.';
 }

@@ -1601,6 +1601,66 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'登出'**
   String get logoutConfirmBtn;
+
+  /// No description provided for @dataWeek.
+  ///
+  /// In zh, this message translates to:
+  /// **'週'**
+  String get dataWeek;
+
+  /// No description provided for @dataMonth.
+  ///
+  /// In zh, this message translates to:
+  /// **'月'**
+  String get dataMonth;
+
+  /// No description provided for @dataYear.
+  ///
+  /// In zh, this message translates to:
+  /// **'年'**
+  String get dataYear;
+
+  /// No description provided for @dataMoreInfo.
+  ///
+  /// In zh, this message translates to:
+  /// **'更多資訊'**
+  String get dataMoreInfo;
+
+  /// No description provided for @dataAboutHeartRate.
+  ///
+  /// In zh, this message translates to:
+  /// **'關於心率'**
+  String get dataAboutHeartRate;
+
+  /// No description provided for @dataAboutSleep.
+  ///
+  /// In zh, this message translates to:
+  /// **'關於睡眠'**
+  String get dataAboutSleep;
+
+  /// No description provided for @dataHeartRateDesc.
+  ///
+  /// In zh, this message translates to:
+  /// **'心臟每天約跳動100,000次，心跳會在每次休息和活動過程中加速和放慢。心率是每分鐘的心臟跳動次數，可以檢測心血管的健康。'**
+  String get dataHeartRateDesc;
+
+  /// No description provided for @dataSleepDesc.
+  ///
+  /// In zh, this message translates to:
+  /// **'成年人平均每天需要約 7-9 小時的睡眠。身體在淺眠、深眠與快速動眼期等階段中調節能量、修復組織並整理記憶。睡眠時間與品質反映身心狀態。'**
+  String get dataSleepDesc;
+
+  /// No description provided for @msgHrWarning.
+  ///
+  /// In zh, this message translates to:
+  /// **'偵測到心率略微偏高，建議啟動 ECHO 放鬆一下。'**
+  String get msgHrWarning;
+
+  /// No description provided for @msgHrAlert.
+  ///
+  /// In zh, this message translates to:
+  /// **'偵測到心率異常升高，已為您自動啟動 ECHO 舒緩模式。'**
+  String get msgHrAlert;
 }
 
 class _AppLocalizationsDelegate

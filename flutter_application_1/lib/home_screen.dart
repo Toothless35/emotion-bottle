@@ -39,7 +39,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // 🌟 定義這四個導航按鈕對應的頁面
     final List<Widget> pages = [
-      const HomeContent(), // 首頁內容 (我們把它獨立寫在檔案最下方)
+      // 🌟 把遙控器傳給首頁，設定成「點擊時，把分頁切換到 index 1 (數據頁)」
+    HomeContent(
+      onJumpToData: () {
+        setState(() {
+          _currentIndex = 1; // 如果你的數據頁在第二個，index 就是 1
+        });
+      },
+    ),
       const DataScreen(),  // 數據頁
       const ShopScreen(), // 商城頁
       // ... 前面可能是你的 Home, Data 頁面
@@ -142,7 +149,13 @@ enum HealthStatus { normal, warning, sleep, alert }
 
 // 🌟 2. 將 StatelessWidget 改為 StatefulWidget，讓畫面可以隨數據更新
 class HomeContent extends StatefulWidget {
-  const HomeContent({super.key});
+  // 🌟 1. 宣告接收這個遙控器
+  final VoidCallback onJumpToData; 
+
+  const HomeContent({
+    super.key, 
+    required this.onJumpToData, // 🌟 2. 規定外面呼叫時一定要給遙控器
+  });
 
   @override
   State<HomeContent> createState() => _HomeContentState();
@@ -193,6 +206,47 @@ class _HomeContentState extends State<HomeContent> {
         _currentHeartRate = 72;
       }
     });
+
+    // 🌟 準備呼叫字典裡的通知文字
+    final loc = AppLocalizations.of(context)!;
+
+    // 🌟 判斷狀態並推播對應的通知
+    if (_currentHeartRate == 95) {
+      _showAppNotification(loc.msgHrWarning, isAlert: false);
+    } else if (_currentHeartRate == 120) {
+      _showAppNotification(loc.msgHrAlert, isAlert: true);
+    }
+  }
+  // 🌟 2. 建立一個專屬的浮動通知小工具 (SnackBar)
+  void _showAppNotification(String message, {required bool isAlert}) {
+    // 先清除畫面上舊的通知，避免狂點時通知卡住疊在一起
+    ScaffoldMessenger.of(context).clearSnackBars(); 
+    
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            // 根據嚴重程度顯示不同的 Icon
+            Icon(
+              isAlert ? Icons.warning_amber_rounded : Icons.info_outline, 
+              color: Colors.white,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                message, 
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, letterSpacing: 0.5),
+              ),
+            ),
+          ],
+        ),
+        behavior: SnackBarBehavior.floating, // 讓通知浮動在畫面上
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)), // 圓角設計
+        margin: const EdgeInsets.only(bottom: 30, left: 20, right: 20), // 距離底部和兩側的空間
+        backgroundColor: isAlert ? Colors.redAccent.shade700 : Colors.orange.shade700, // 警示用紅色，提醒用橘色
+        duration: const Duration(seconds: 4), // 顯示 4 秒後自動消失
+      ),
+    );
   }
 
   @override
@@ -200,30 +254,38 @@ class _HomeContentState extends State<HomeContent> {
     final loc = AppLocalizations.of(context)!;
     final gradientColors = _currentGradientColors; // 取得當前該顯示的顏色
 
-    return Stack(
-      children: [
-        // 頂部漸層波浪 (顏色會隨狀態改變)
-        ClipPath(
-          clipper: QuizWaveClipper(),
-          // 加入 AnimatedContainer 讓顏色切換時有柔和的漸變動畫
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 800), 
-            height: 200,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                // 波浪需要一點透明度，所以我們加上 .withAlpha(100) (大約 40% 透明度)
-                colors: gradientColors.map((c) => c.withAlpha(100)).toList(),
-              ),
-            ),
-          ),
-        ),
+    return GestureDetector(
+      // 🌟 確保點在空白處也能穿透抓到
+      behavior: HitTestBehavior.translucent, 
+      onTap: () {
+        // 🌟 點擊畫面的任何空白處，都會變換心率！
+        _simulateDeviceData(); 
+      },
+      child: Stack(
+        children: [
+          // ================= 1. 底層：漸層波浪背景 =================
+          ClipPath(
+            clipper: QuizWaveClipper(),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 800),
+              height: 200,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: gradientColors.map((c) => c.withAlpha(100)).toList(),
+                ), 
+              ), 
+            ), 
+          ), 
 
-        SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
+          // ================= 2. 上層：主要內容區塊 =================
+          SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  // 👇 你的愛心分數從這裡開始往下接，不要動到下面的程式碼囉！
                 const SizedBox(height: 10),
                 // 愛心分數 (加入點擊事件來模擬數據變化)
                 Padding(
@@ -231,7 +293,13 @@ class _HomeContentState extends State<HomeContent> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: GestureDetector(
-                      onTap: _simulateDeviceData, // 🌟 秘密測試按鈕：點擊這裡切換數據！
+                      onTap: () {
+                        //_simulateDeviceData(); // 保留你原本的測試功能
+                        widget.onJumpToData(); // 🌟 加上這行：按下遙控器，呼叫外面的主畫面切換分頁！
+                      }, // 🌟 秘密測試按鈕：點擊這裡切換數據！
+                      // 🌟 刪除 _simulateDeviceData(); 
+                      // 現在它是一顆純粹的傳送門，只負責跳轉！
+                 
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 500),
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -253,8 +321,9 @@ class _HomeContentState extends State<HomeContent> {
                             const SizedBox(width: 8),
                             // 顯示即時心率
                             Text(
-                              "$_currentHeartRate", 
-                              style: const TextStyle(color: Color(0xFF5D4037), fontWeight: FontWeight.bold, fontSize: 16),
+                              // 🌟 把這裡的文字從寫死的 '72' 改成抓變數！
+                              '$_currentHeartRate', 
+                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -341,7 +410,8 @@ class _HomeContentState extends State<HomeContent> {
             ),
           ),
         ),
-      ],
-    );
-  }
+      ], // 這是關閉 Stack 的 children [ ... ] 陣列
+            ), // 🌟 補上這個！用來關閉 Stack()
+          ); // 🌟 這個用來關閉最外層的 return GestureDetector()
+        } // 這個是關閉 build(BuildContext context) 函數
 }

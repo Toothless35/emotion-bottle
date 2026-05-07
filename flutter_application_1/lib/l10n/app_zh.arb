@@ -283,5 +283,15 @@
   "logoutConfirmTitle": "確認登出",
   "logoutConfirmMsg": "您確定要登出嗎？",
   "logoutConfirmBtn": "登出",
-  "dialogCancel": "取消"
+  "dialogCancel": "取消",
+  "dataWeek": "週",
+  "dataMonth": "月",
+  "dataYear": "年",
+  "dataMoreInfo": "更多資訊",
+  "dataAboutHeartRate": "關於心率",
+  "dataAboutSleep": "關於睡眠",
+  "dataHeartRateDesc": "心臟每天約跳動100,000次，心跳會在每次休息和活動過程中加速和放慢。心率是每分鐘的心臟跳動次數，可以檢測心血管的健康。",
+  "dataSleepDesc": "成年人平均每天需要約 7-9 小時的睡眠。身體在淺眠、深眠與快速動眼期等階段中調節能量、修復組織並整理記憶。睡眠時間與品質反映身心狀態。",
+  "msgHrWarning": "偵測到心率略微偏高，建議啟動 ECHO 放鬆一下。",
+  "msgHrAlert": "偵測到心率異常升高，已為您自動啟動 ECHO 舒緩模式。"
 }

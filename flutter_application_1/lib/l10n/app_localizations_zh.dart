@@ -778,4 +778,36 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get logoutConfirmBtn => '登出';
+
+  @override
+  String get dataWeek => '週';
+
+  @override
+  String get dataMonth => '月';
+
+  @override
+  String get dataYear => '年';
+
+  @override
+  String get dataMoreInfo => '更多資訊';
+
+  @override
+  String get dataAboutHeartRate => '關於心率';
+
+  @override
+  String get dataAboutSleep => '關於睡眠';
+
+  @override
+  String get dataHeartRateDesc =>
+      '心臟每天約跳動100,000次，心跳會在每次休息和活動過程中加速和放慢。心率是每分鐘的心臟跳動次數，可以檢測心血管的健康。';
+
+  @override
+  String get dataSleepDesc =>
+      '成年人平均每天需要約 7-9 小時的睡眠。身體在淺眠、深眠與快速動眼期等階段中調節能量、修復組織並整理記憶。睡眠時間與品質反映身心狀態。';
+
+  @override
+  String get msgHrWarning => '偵測到心率略微偏高，建議啟動 ECHO 放鬆一下。';
+
+  @override
+  String get msgHrAlert => '偵測到心率異常升高，已為您自動啟動 ECHO 舒緩模式。';
 }
